@@ -1,25 +1,19 @@
 
 import React from 'react';
-import SearchBar from './SearchBar';
+import { Database } from 'lucide-react';
+import { ModeToggle } from './ModeToggle';
 
-interface PageHeaderProps {
-  searchTerm: string;
-  setSearchTerm: (term: string) => void;
-}
-
-const PageHeader = ({ searchTerm, setSearchTerm }: PageHeaderProps) => {
+const PageHeader = () => {
   return (
-    <header className="bg-card border-b border-border shadow-sm z-10">
-      <div className="container mx-auto px-4 py-6">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <h1 className="text-2xl font-semibold tracking-tight">Memory Comparison</h1>
-            <p className="text-muted-foreground mt-1">
-              Compare hard drives, SSDs, and other storage devices
-            </p>
-          </div>
-          
-          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+    <header className="bg-card sticky top-0 z-50 w-full border-b border-border shadow-sm">
+      <div className="container flex h-16 items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Database className="h-6 w-6 text-primary" />
+          <span className="text-xl font-bold">Memory Explorer</span>
+        </div>
+        
+        <div className="flex items-center gap-2">
+          <ModeToggle />
         </div>
       </div>
     </header>

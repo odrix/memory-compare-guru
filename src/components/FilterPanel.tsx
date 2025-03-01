@@ -145,34 +145,36 @@ const FilterPanel = ({
 
   return (
     <div 
-      className={`fixed md:relative top-0 left-0 h-full w-full md:w-80 md:min-h-screen bg-card shadow-lg z-50 md:z-0 overflow-y-auto p-6 transition-transform duration-300 ease-in-out ${
+      className={`fixed md:relative top-0 left-0 h-full w-full md:w-80 md:max-h-[calc(100vh-12rem)] bg-card z-50 md:z-0 overflow-y-auto transition-transform duration-300 ease-in-out ${
         isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
       }`}
     >
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold">Filters</h2>
-        <div className="flex items-center space-x-2">
-          <button
-            onClick={onResetFilters}
-            className="text-sm text-primary hover:text-primary/80 transition-colors"
-          >
-            Reset
-          </button>
-          <button
-            onClick={onClose}
-            className="p-1 rounded-full hover:bg-muted transition-colors md:hidden"
-            aria-label="Close filters"
-          >
-            <X size={20} />
-          </button>
+      <div className="sticky top-0 bg-card z-10 p-6 pb-4 border-b border-border">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-semibold">Filters</h2>
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={onResetFilters}
+              className="text-sm text-primary hover:text-primary/80 transition-colors"
+            >
+              Reset
+            </button>
+            <button
+              onClick={onClose}
+              className="p-1 rounded-full hover:bg-muted transition-colors md:hidden"
+              aria-label="Close filters"
+            >
+              <X size={20} />
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="space-y-6">
+      <div className="p-6 pt-4 space-y-6">
         {filters.map((filter) => (
           <div key={filter.field} className="space-y-3">
             <div className="flex items-center justify-between">
-              <Label className="text-sm font-medium">{filter.label}</Label>
+              <Label className="text-sm font-bold">{filter.label}</Label>
               <div className="flex items-center space-x-2">
                 <Label htmlFor={`show-${filter.field}`} className="text-xs text-muted-foreground">
                   Show column

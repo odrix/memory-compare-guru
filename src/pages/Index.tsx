@@ -19,7 +19,6 @@ const Index = () => {
     field: 'capacityGB',
     direction: 'desc'
   });
-  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const prices = devices
@@ -41,16 +40,6 @@ const Index = () => {
   useEffect(() => {
     let result = [...devices];
     
-    if (searchTerm) {
-      const term = searchTerm.toLowerCase();
-      result = result.filter(device => 
-        device.title.toLowerCase().includes(term) ||
-        device.brand.toLowerCase().includes(term) ||
-        device.model.toLowerCase().includes(term) ||
-        (device.subtitle && device.subtitle.toLowerCase().includes(term))
-      );
-    }
-    
     // Process activeFilters by handling 'all' value for select filters
     const processedFilters = { ...activeFilters };
     Object.keys(processedFilters).forEach(key => {
@@ -60,11 +49,10 @@ const Index = () => {
     });
     
     result = filterDevices(result, processedFilters);
-    
     result = sortDevices(result, sortConfig);
     
     setFilteredDevices(result);
-  }, [devices, activeFilters, sortConfig, searchTerm]);
+  }, [devices, activeFilters, sortConfig]);
 
   const handleFilterChange = (field: string, value: any) => {
     setActiveFilters(prev => ({
@@ -100,7 +88,7 @@ const Index = () => {
 
   const resetFilters = () => {
     setActiveFilters({});
-    setSearchTerm('');
+    
     setSortConfig({
       field: 'capacityGB',
       direction: 'desc'
@@ -119,7 +107,7 @@ const Index = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <PageHeader searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <PageHeader />
 
       <ContentArea
         isFilterPanelOpen={isFilterPanelOpen}

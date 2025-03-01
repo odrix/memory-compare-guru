@@ -42,18 +42,20 @@ const ContentArea = ({
       />
 
       <div className="flex flex-col md:flex-row gap-6">
-        <FilterPanel
-          filters={filters}
-          activeFilters={activeFilters}
-          devices={devices}
-          onFilterChange={onFilterChange}
-          onVisibilityChange={onVisibilityChange}
-          onResetFilters={onResetFilters}
-          isOpen={isFilterPanelOpen}
-          onClose={onClose}
-        />
+        <div className="relative md:h-[calc(100vh-12rem)] md:overflow-hidden border-r border-border md:pr-6">
+          <FilterPanel
+            filters={filters}
+            activeFilters={activeFilters}
+            devices={devices}
+            onFilterChange={onFilterChange}
+            onVisibilityChange={onVisibilityChange}
+            onResetFilters={onResetFilters}
+            isOpen={isFilterPanelOpen}
+            onClose={onClose}
+          />
+        </div>
 
-        <div className="flex-1 overflow-hidden">
+        <div className="flex-1 md:h-[calc(100vh-12rem)] md:overflow-y-auto">
           <div className="mb-4 flex items-center justify-between">
             <p className="text-sm text-muted-foreground">
               Showing {filteredDevices.length} of {devices.length} devices
