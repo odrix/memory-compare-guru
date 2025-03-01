@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { FilterConfig, MemoryDevice, SortConfig } from '@/types/memory';
 import { memoryDevices, getDefaultFilters } from '@/data/memory-data';
@@ -50,7 +51,15 @@ const Index = () => {
       );
     }
     
-    result = filterDevices(result, activeFilters);
+    // Process activeFilters by handling 'all' value for select filters
+    const processedFilters = { ...activeFilters };
+    Object.keys(processedFilters).forEach(key => {
+      if (processedFilters[key] === 'all') {
+        delete processedFilters[key]; // Remove 'all' filters as they should not filter the data
+      }
+    });
+    
+    result = filterDevices(result, processedFilters);
     
     result = sortDevices(result, sortConfig);
     

@@ -93,7 +93,7 @@ const FilterPanel = ({
               <SelectValue placeholder={`Select ${label}`} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All</SelectItem>
+              <SelectItem value="all">All</SelectItem>
               {selectOptions.map((option) => (
                 <SelectItem key={option} value={option}>
                   {option}
