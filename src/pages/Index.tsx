@@ -89,9 +89,12 @@ const Index = () => {
   };
 
   const handleSort = (field: string) => {
+    // Cast the field to the correct type (keyof MemoryDevice | "price")
+    const typedField = field as keyof MemoryDevice | "price";
+    
     setSortConfig(prev => ({
-      field: field,
-      direction: prev.field === field && prev.direction === 'asc' ? 'desc' : 'asc'
+      field: typedField,
+      direction: prev.field === typedField && prev.direction === 'asc' ? 'desc' : 'asc'
     }));
   };
 
