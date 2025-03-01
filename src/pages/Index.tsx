@@ -1,14 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
-import MemoryTable from '@/components/MemoryTable';
-import FilterPanel from '@/components/FilterPanel';
 import { FilterConfig, MemoryDevice, SortConfig } from '@/types/memory';
 import { memoryDevices, getDefaultFilters } from '@/data/memory-data';
 import { filterDevices, sortDevices, getMinMaxValues, getBestPrice } from '@/utils/filter-utils';
-import { Button } from '@/components/ui/button';
-import { Menu, Search, X } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
+import PageHeader from '@/components/PageHeader';
+import ContentArea from '@/components/ContentArea';
+import PageFooter from '@/components/PageFooter';
 
 const Index = () => {
   const { toast } = useToast();
@@ -119,87 +117,24 @@ const Index = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <header className="bg-card border-b border-border shadow-sm z-10">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <h1 className="text-2xl font-semibold tracking-tight">Memory Comparison</h1>
-              <p className="text-muted-foreground mt-1">
-                Compare hard drives, SSDs, and other storage devices
-              </p>
-            </div>
-            
-            <div className="w-full md:w-1/3 relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search devices..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-9 w-full"
-              />
-              {searchTerm && (
-                <button
-                  onClick={() => setSearchTerm('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2"
-                >
-                  <X className="h-4 w-4 text-muted-foreground hover:text-foreground" />
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      </header>
+      <PageHeader searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-      <main className="flex-1 container mx-auto px-4 py-8">
-        <div className="md:hidden mb-4">
-          <Button 
-            variant="outline" 
-            className="w-full flex items-center justify-center"
-            onClick={toggleFilterPanel}
-          >
-            <Menu className="mr-2 h-4 w-4" />
-            {isFilterPanelOpen ? 'Hide Filters' : 'Show Filters'}
-          </Button>
-        </div>
+      <ContentArea
+        isFilterPanelOpen={isFilterPanelOpen}
+        toggleFilterPanel={toggleFilterPanel}
+        filters={filters}
+        activeFilters={activeFilters}
+        devices={devices}
+        filteredDevices={filteredDevices}
+        onFilterChange={handleFilterChange}
+        onVisibilityChange={handleColumnVisibilityChange}
+        onResetFilters={resetFilters}
+        onClose={() => setIsFilterPanelOpen(false)}
+        sortConfig={sortConfig}
+        onSort={handleSort}
+      />
 
-        <div className="flex flex-col md:flex-row gap-6">
-          <FilterPanel
-            filters={filters}
-            activeFilters={activeFilters}
-            devices={devices}
-            onFilterChange={handleFilterChange}
-            onVisibilityChange={handleColumnVisibilityChange}
-            onResetFilters={resetFilters}
-            isOpen={isFilterPanelOpen}
-            onClose={() => setIsFilterPanelOpen(false)}
-          />
-
-          <div className="flex-1 overflow-hidden">
-            <div className="mb-4 flex items-center justify-between">
-              <p className="text-sm text-muted-foreground">
-                Showing {filteredDevices.length} of {devices.length} devices
-              </p>
-            </div>
-            
-            <div className="animate-fade-in">
-              <MemoryTable 
-                devices={filteredDevices}
-                filters={filters}
-                sortConfig={sortConfig}
-                onSort={handleSort}
-              />
-            </div>
-          </div>
-        </div>
-      </main>
-
-      <footer className="border-t border-border bg-card py-6">
-        <div className="container mx-auto px-4">
-          <p className="text-center text-sm text-muted-foreground">
-            Memory Comparison Tool © {new Date().getFullYear()}
-          </p>
-        </div>
-      </footer>
+      <PageFooter />
     </div>
   );
 };
