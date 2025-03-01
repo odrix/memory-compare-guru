@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { FilterConfig, MemoryDevice, SortConfig } from '@/types/memory';
 import { memoryDevices, getDefaultFilters } from '@/data/memory-data';
@@ -21,7 +20,6 @@ const Index = () => {
   });
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Initialize price range filter based on data
   useEffect(() => {
     const prices = devices
       .map(device => getBestPrice(device))
@@ -39,11 +37,9 @@ const Index = () => {
     );
   }, [devices]);
 
-  // Apply filters and search
   useEffect(() => {
     let result = [...devices];
     
-    // Apply search term filter
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       result = result.filter(device => 
@@ -54,10 +50,8 @@ const Index = () => {
       );
     }
     
-    // Apply active filters
     result = filterDevices(result, activeFilters);
     
-    // Apply sorting
     result = sortDevices(result, sortConfig);
     
     setFilteredDevices(result);
@@ -87,7 +81,6 @@ const Index = () => {
   };
 
   const handleSort = (field: string) => {
-    // Cast the field to the correct type (keyof MemoryDevice | "price")
     const typedField = field as keyof MemoryDevice | "price";
     
     setSortConfig(prev => ({
