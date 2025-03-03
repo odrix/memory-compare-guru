@@ -1,4 +1,3 @@
-
 import { MemoryDevice } from '../types/memory';
 
 export const memoryDevices: MemoryDevice[] = [

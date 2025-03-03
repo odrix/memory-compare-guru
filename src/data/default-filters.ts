@@ -1,4 +1,3 @@
-
 import { FilterConfig } from '../types/memory';
 
 export const getDefaultFilters = (): FilterConfig[] => [

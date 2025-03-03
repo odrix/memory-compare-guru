@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { FilterConfig, MemoryDevice, SortConfig } from '../types/memory';
 import { getBestPrice } from '@/utils/filter-utils';

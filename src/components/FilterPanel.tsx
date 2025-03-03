@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { FilterConfig, MemoryDevice } from '../types/memory';
 import { Switch } from '@/components/ui/switch';
@@ -39,39 +38,32 @@ const FilterPanel = ({
 }: FilterPanelProps) => {
   const renderFilterControl = (filter: FilterConfig) => {
     const { field, label, type, options, min, max, unit } = filter;
-    const value = activeFilters[field] || '';
+    const value = activeFilters[field] || { min: min || 0, max: max || 100 };
 
     switch (type) {
       case 'range':
-        const minVal = value?.min || min || 0;
-        const maxVal = value?.max || max || 100;
-        const currentVal = value?.current !== undefined
-          ? [value.current]
-          : [Math.floor((minVal + maxVal) / 2)];
-
         return (
           <div className="space-y-3">
             <div className="flex justify-between">
               <span className="text-sm text-muted-foreground">
-                {minVal} {unit}
+                {value.min} {unit}
               </span>
               <span className="text-sm font-medium">
-                {value?.current || currentVal[0]} {unit}
+                {value.min} - {value.max} {unit}
               </span>
               <span className="text-sm text-muted-foreground">
-                {maxVal} {unit}
+                {value.max} {unit}
               </span>
             </div>
             <Slider
-              min={minVal}
-              max={maxVal}
+              min={min}
+              max={max}
               step={1}
-              value={value?.current !== undefined ? [value.current] : currentVal}
+              value={[value.min, value.max]}
               onValueChange={(vals) => {
                 onFilterChange(field, {
-                  min: minVal,
-                  max: maxVal,
-                  current: vals[0]
+                  min: vals[0],
+                  max: vals[1]
                 });
               }}
             />

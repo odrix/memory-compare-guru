@@ -1,4 +1,3 @@
-
 import { FilterConfig, MemoryDevice, SortConfig } from "../types/memory";
 
 export const getMinMaxValues = (devices: MemoryDevice[], field: keyof MemoryDevice) => {

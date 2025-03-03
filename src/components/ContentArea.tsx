@@ -1,4 +1,3 @@
-
 import React from 'react';
 import MemoryTable from '@/components/MemoryTable';
 import FilterPanel from '@/components/FilterPanel';
