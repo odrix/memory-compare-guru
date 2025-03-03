@@ -15,7 +15,7 @@ const MemoryTable = ({ devices, filters, sortConfig, onSort }: MemoryTableProps)
   const formatValue = (device: MemoryDevice, field: string, unit?: string) => {
     if (field === 'price') {
       const price = getBestPrice(device);
-      return price !== null ? `$${price.toFixed(2)}` : 'N/A';
+      return price !== null ? `${price.toFixed(2)}€` : 'N/A';
     }
 
     const value = device[field as keyof MemoryDevice];
