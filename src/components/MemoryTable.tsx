@@ -17,6 +17,15 @@ const MemoryTable = ({ devices, filters, sortConfig, onSort }: MemoryTableProps)
       return price !== null ? `${price.toFixed(2)}€` : 'N/A';
     }
 
+    if (field === 'euroPerGB') {
+      const price = getBestPrice(device);
+      const capacity = device.capacityGB;
+      if (price !== null && capacity) {
+        return `${(price / capacity).toFixed(2)} €/GB`;
+      }
+      return 'N/A';
+    }
+
     const value = device[field as keyof MemoryDevice];
     if (value === undefined || value === null) return 'N/A';
 
@@ -33,21 +42,21 @@ const MemoryTable = ({ devices, filters, sortConfig, onSort }: MemoryTableProps)
 
   const renderSortArrow = (field: string) => {
     if (sortConfig.field !== field) return null;
-    
-    return sortConfig.direction === 'asc' 
-      ? <ArrowUp className="inline ml-1 w-4 h-4" /> 
+
+    return sortConfig.direction === 'asc'
+      ? <ArrowUp className="inline ml-1 w-4 h-4" />
       : <ArrowDown className="inline ml-1 w-4 h-4" />;
   };
 
-  // Desired column order: Capacité (GB), Prix, Marque, Technologie, Vitesse lecture, Vitesse écriture, RPM, Cache, Format, Type, Interface, Poids, Garantie, Évaluation
+  // Desired column order: Capacité (GB), Prix, Euro/GB, Marque, Technologie, Vitesse lecture, Vitesse écriture, RPM, Cache, Format, Type, Interface, Poids, Garantie, Évaluation
   const columnOrder = [
-    'capacityGB', 'price', 'brand', 'technology', 'readSpeed', 'writeSpeed', 'rpm', 
+    'capacityGB', 'price', 'euroPerGB', 'brand', 'technology', 'readSpeed', 'writeSpeed', 'rpm',
     'cache', 'format', 'type', 'interface', 'weight', 'warranty', 'rating'
   ];
 
   // Get visible filters and sort them according to the column order
   const visibleFilters = filters
-    .filter(filter => filter.isVisible)
+    .filter(filter => filter.isVisible || filter.field === 'euroPerGB')
     .sort((a, b) => {
       const indexA = columnOrder.indexOf(a.field);
       const indexB = columnOrder.indexOf(b.field);
@@ -60,7 +69,7 @@ const MemoryTable = ({ devices, filters, sortConfig, onSort }: MemoryTableProps)
         <thead>
           <tr className="bg-muted/50">
             {visibleFilters.map((filter) => (
-              <th 
+              <th
                 key={filter.field}
                 className="px-4 py-3 text-left text-sm font-medium text-muted-foreground tracking-wider cursor-pointer hover:bg-muted transition-colors"
                 onClick={() => onSort(filter.field)}
@@ -82,7 +91,7 @@ const MemoryTable = ({ devices, filters, sortConfig, onSort }: MemoryTableProps)
             </tr>
           ) : (
             devices.map((device, i) => (
-              <tr 
+              <tr
                 key={device.id}
                 className={`
                   border-b border-border hover:bg-muted/20 transition-colors

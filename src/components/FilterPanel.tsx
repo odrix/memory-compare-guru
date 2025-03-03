@@ -72,10 +72,10 @@ const FilterPanel = ({
 
       case 'select':
         // Get dynamic options if not provided
-        const selectOptions = options || 
+        const selectOptions = options ||
           getUniqueValues(devices, field as keyof MemoryDevice)
             .map(v => String(v));
-        
+
         return (
           <Select
             value={value}
@@ -136,7 +136,7 @@ const FilterPanel = ({
   };
 
   return (
-    <div 
+    <div
       className={`fixed md:relative top-0 left-0 h-full w-full md:w-80 md:max-h-[calc(100vh-12rem)] bg-card z-50 md:z-0 overflow-y-auto transition-transform duration-300 ease-in-out ${
         isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
       }`}
