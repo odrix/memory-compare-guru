@@ -40,8 +40,20 @@ const MemoryTable = ({ devices, filters, sortConfig, onSort }: MemoryTableProps)
       : <ArrowDown className="inline ml-1 w-4 h-4" />;
   };
 
-  // Only show columns that are marked as visible in filters
-  const visibleFilters = filters.filter(filter => filter.isVisible);
+  // Desired column order: Capacité (GB), Prix, Marque, Technologie, Vitesse lecture, Vitesse écriture, RPM, Cache, Format, Type, Interface, Poids, Garantie, Évaluation
+  const columnOrder = [
+    'capacityGB', 'price', 'brand', 'technology', 'readSpeed', 'writeSpeed', 'rpm', 
+    'cache', 'format', 'type', 'interface', 'weight', 'warranty', 'rating'
+  ];
+
+  // Get visible filters and sort them according to the column order
+  const visibleFilters = filters
+    .filter(filter => filter.isVisible)
+    .sort((a, b) => {
+      const indexA = columnOrder.indexOf(a.field);
+      const indexB = columnOrder.indexOf(b.field);
+      return indexA - indexB;
+    });
 
   return (
     <div className="table-container overflow-x-auto">
