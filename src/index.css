@@ -140,4 +140,9 @@
   .filter-switch-handle {
     @apply pointer-events-none inline-block h-4 w-4 transform rounded-sm bg-white shadow-lg ring-0 transition duration-200 ease-in-out;
   }
+  
+  /* Pastel green color for active switch */
+  .filter-switch.data-\[state\=checked\]:bg-green-300 {
+    @apply data-[state=checked]:bg-green-300;
+  }
 }

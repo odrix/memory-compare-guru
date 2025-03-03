@@ -183,7 +183,7 @@ const FilterPanel = ({
                   id={`show-${filter.field}`}
                   checked={filter.isVisible}
                   onCheckedChange={(checked) => onVisibilityChange(filter.field, checked)}
-                  className="filter-switch bg-gray-300 data-[state=checked]:bg-gray-500"
+                  className="filter-switch bg-gray-300 data-[state=checked]:bg-green-300"
                 />
               </div>
             </div>
