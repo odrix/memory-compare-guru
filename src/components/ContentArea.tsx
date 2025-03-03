@@ -58,7 +58,7 @@ const ContentArea = ({
         <div className="flex-1 md:h-[calc(100vh-12rem)] md:overflow-y-auto">
           <div className="mb-4 flex items-center justify-between">
             <p className="text-sm text-muted-foreground">
-              Showing {filteredDevices.length} of {devices.length} devices
+              Affichage de {filteredDevices.length} sur {devices.length} appareils
             </p>
           </div>
           

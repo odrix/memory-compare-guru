@@ -9,7 +9,7 @@ const PageHeader = () => {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Database className="h-6 w-6 text-primary" />
-          <span className="text-xl font-bold">Memory Explorer</span>
+          <span className="text-xl font-bold">Explorateur de Mémoire</span>
         </div>
         
         <div className="flex items-center gap-2">

@@ -90,10 +90,10 @@ const FilterPanel = ({
             onValueChange={(val) => onFilterChange(field, val)}
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder={`Select ${label}`} />
+              <SelectValue placeholder={`Sélectionner ${label}`} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="all">Tous</SelectItem>
               {selectOptions.map((option) => (
                 <SelectItem key={option} value={option}>
                   {option}
@@ -106,7 +106,7 @@ const FilterPanel = ({
       case 'text':
         return (
           <Input
-            placeholder={`Filter by ${label}`}
+            placeholder={`Filtrer par ${label}`}
             value={value}
             onChange={(e) => onFilterChange(field, e.target.value)}
             className="w-full"
@@ -151,13 +151,13 @@ const FilterPanel = ({
     >
       <div className="sticky top-0 bg-card z-10 p-6 pb-4 border-b border-border">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold">Filters</h2>
+          <h2 className="text-xl font-semibold">Filtres</h2>
           <div className="flex items-center space-x-2">
             <button
               onClick={onResetFilters}
               className="text-sm text-primary hover:text-primary/80 transition-colors"
             >
-              Reset
+              Réinitialiser
             </button>
             <button
               onClick={onClose}
@@ -177,13 +177,13 @@ const FilterPanel = ({
               <Label className="text-sm font-bold">{filter.label}</Label>
               <div className="flex items-center space-x-2">
                 <Label htmlFor={`show-${filter.field}`} className="text-xs text-muted-foreground">
-                  Show column
+                  Afficher colonne
                 </Label>
                 <Switch
                   id={`show-${filter.field}`}
                   checked={filter.isVisible}
                   onCheckedChange={(checked) => onVisibilityChange(filter.field, checked)}
-                  className="filter-switch"
+                  className="filter-switch bg-gray-300 data-[state=checked]:bg-gray-500"
                 />
               </div>
             </div>

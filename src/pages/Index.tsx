@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { FilterConfig, MemoryDevice, SortConfig } from '@/types/memory';
 import { memoryDevices, getDefaultFilters } from '@/data/memory-data';
@@ -61,8 +60,8 @@ const Index = () => {
     }));
 
     toast({
-      title: "Filter applied",
-      description: `${field} filter updated`,
+      title: "Filtre appliqué",
+      description: `Filtre ${field} mis à jour`,
       duration: 1500,
     });
   };
@@ -95,8 +94,8 @@ const Index = () => {
     });
     
     toast({
-      title: "Filters reset",
-      description: "All filters have been cleared",
+      title: "Filtres réinitialisés",
+      description: "Tous les filtres ont été effacés",
       duration: 1500,
     });
   };
