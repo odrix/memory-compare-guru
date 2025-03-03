@@ -170,7 +170,7 @@ const FilterPanel = ({
         </div>
       </div>
 
-      <div className="p-6 pt-4 space-y-6">
+      <div className="p-6 pt-4 space-y-8">
         {filters.map((filter) => (
           <div key={filter.field} className="space-y-3">
             <div className="flex items-center justify-between">
@@ -183,7 +183,7 @@ const FilterPanel = ({
                   id={`show-${filter.field}`}
                   checked={filter.isVisible}
                   onCheckedChange={(checked) => onVisibilityChange(filter.field, checked)}
-                  className="filter-switch bg-gray-300 data-[state=checked]:bg-green-300"
+                  className="filter-switch-small bg-gray-300 data-[state=checked]:bg-green-300"
                 />
               </div>
             </div>
