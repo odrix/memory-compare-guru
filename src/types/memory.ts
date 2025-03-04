@@ -1,11 +1,16 @@
+
 export interface Offer {
   id: string;
   price: number;
   currency: string;
   countryCode: string;
-  url?: string;
+  url: string;
   store?: string;
   date?: string;
+  inactive: boolean;
+  inactivedDateUTC?: string;
+  createdDateUTC: string;
+  lastCheckedDateUTC?: string;
 }
 
 export interface MemoryDevice {
@@ -30,10 +35,12 @@ export interface MemoryDevice {
   rating?: number;
   offers: Offer[];
   isVisible?: boolean;
+  sku: string;
+  ean: string;
 }
 
 export type FilterConfig = {
-  field: keyof MemoryDevice | 'price';
+  field: keyof MemoryDevice | 'price' | 'euroPerGB';
   label: string;
   type: 'range' | 'select' | 'text' | 'switch' | 'checkbox';
   options?: string[];
@@ -44,6 +51,6 @@ export type FilterConfig = {
 }
 
 export type SortConfig = {
-  field: keyof MemoryDevice | 'price';
+  field: keyof MemoryDevice | 'price' | 'euroPerGB';
   direction: 'asc' | 'desc';
 }

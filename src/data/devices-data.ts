@@ -1,3 +1,4 @@
+
 import { MemoryDevice } from '../types/memory';
 
 export const memoryDevices: MemoryDevice[] = [
@@ -21,9 +22,31 @@ export const memoryDevices: MemoryDevice[] = [
     weight: 610,
     warranty: 24,
     rating: 4.7,
+    sku: 'ST2000DM008',
+    ean: '8719706427151',
     offers: [
-      { id: 'o1', price: 49.99, currency: 'USD', countryCode: 'US', store: 'Amazon' },
-      { id: 'o2', price: 52.99, currency: 'EUR', countryCode: 'FR', store: 'LDLC' }
+      { 
+        id: 'o1', 
+        price: 49.99, 
+        currency: 'USD', 
+        countryCode: 'US', 
+        store: 'Amazon', 
+        url: 'https://www.amazon.com/Seagate-BarraCuda-Internal-Drive-3-5-Inch/dp/B07H2RR55Q',
+        inactive: false,
+        createdDateUTC: '2023-01-15T10:30:00Z',
+        lastCheckedDateUTC: '2023-06-20T08:15:00Z'
+      },
+      { 
+        id: 'o2', 
+        price: 52.99, 
+        currency: 'EUR', 
+        countryCode: 'FR', 
+        store: 'LDLC',
+        url: 'https://www.ldlc.com/fiche/PB00263136.html',
+        inactive: false,
+        createdDateUTC: '2023-01-20T14:45:00Z',
+        lastCheckedDateUTC: '2023-06-18T16:30:00Z'
+      }
     ],
     isVisible: true
   },
@@ -46,9 +69,31 @@ export const memoryDevices: MemoryDevice[] = [
     weight: 8,
     warranty: 60,
     rating: 4.9,
+    sku: 'MZ-V7S1T0BW',
+    ean: '8801643602420',
     offers: [
-      { id: 'o3', price: 119.99, currency: 'USD', countryCode: 'US', store: 'Amazon' },
-      { id: 'o4', price: 129.99, currency: 'EUR', countryCode: 'DE', store: 'MediaMarkt' }
+      { 
+        id: 'o3', 
+        price: 119.99, 
+        currency: 'USD', 
+        countryCode: 'US', 
+        store: 'Amazon',
+        url: 'https://www.amazon.com/Samsung-970-EVO-Plus-MZ-V7S1T0B/dp/B07MFZY2F2',
+        inactive: false,
+        createdDateUTC: '2023-02-05T09:15:00Z',
+        lastCheckedDateUTC: '2023-06-19T11:20:00Z'
+      },
+      { 
+        id: 'o4', 
+        price: 129.99, 
+        currency: 'EUR', 
+        countryCode: 'DE', 
+        store: 'MediaMarkt',
+        url: 'https://www.mediamarkt.de/de/product/_samsung-970-evo-plus-1-tb-ssd-1483926.html',
+        inactive: false,
+        createdDateUTC: '2023-02-10T13:30:00Z',
+        lastCheckedDateUTC: '2023-06-17T14:45:00Z'
+      }
     ],
     isVisible: true
   },
@@ -71,9 +116,31 @@ export const memoryDevices: MemoryDevice[] = [
     weight: 45,
     warranty: 36,
     rating: 4.6,
+    sku: 'WDS500G2B0A',
+    ean: '718037856308',
     offers: [
-      { id: 'o5', price: 59.99, currency: 'USD', countryCode: 'US', store: 'Newegg' },
-      { id: 'o6', price: 64.99, currency: 'EUR', countryCode: 'FR', store: 'Amazon' }
+      { 
+        id: 'o5', 
+        price: 59.99, 
+        currency: 'USD', 
+        countryCode: 'US', 
+        store: 'Newegg',
+        url: 'https://www.newegg.com/western-digital-blue-500gb/p/N82E16820250087',
+        inactive: false,
+        createdDateUTC: '2023-01-25T16:40:00Z',
+        lastCheckedDateUTC: '2023-06-21T10:05:00Z'
+      },
+      { 
+        id: 'o6', 
+        price: 64.99, 
+        currency: 'EUR', 
+        countryCode: 'FR', 
+        store: 'Amazon',
+        url: 'https://www.amazon.fr/Blue-Disque-SSD-Interne-WDS500G2B0A/dp/B073SB2MXT',
+        inactive: false,
+        createdDateUTC: '2023-01-28T11:20:00Z',
+        lastCheckedDateUTC: '2023-06-16T09:30:00Z'
+      }
     ],
     isVisible: true
   },
@@ -96,9 +163,32 @@ export const memoryDevices: MemoryDevice[] = [
     weight: 55,
     warranty: 60,
     rating: 4.8,
+    sku: 'CT1000MX500SSD1',
+    ean: '649528785053',
     offers: [
-      { id: 'o7', price: 84.99, currency: 'USD', countryCode: 'US', store: 'Best Buy' },
-      { id: 'o8', price: 89.99, currency: 'EUR', countryCode: 'DE', store: 'Amazon' }
+      { 
+        id: 'o7', 
+        price: 84.99, 
+        currency: 'USD', 
+        countryCode: 'US', 
+        store: 'Best Buy',
+        url: 'https://www.bestbuy.com/site/crucial-mx500-1tb-internal-sata-solid-state-drive/6221571.p',
+        inactive: false,
+        createdDateUTC: '2023-02-15T08:25:00Z',
+        lastCheckedDateUTC: '2023-06-22T15:10:00Z'
+      },
+      { 
+        id: 'o8', 
+        price: 89.99, 
+        currency: 'EUR', 
+        countryCode: 'DE', 
+        store: 'Amazon',
+        url: 'https://www.amazon.de/Crucial-MX500-CT1000MX500SSD1-Internes-NAND/dp/B077SF8KMG',
+        inactive: true,
+        inactivedDateUTC: '2023-06-01T12:00:00Z',
+        createdDateUTC: '2023-02-18T13:50:00Z',
+        lastCheckedDateUTC: '2023-06-01T12:00:00Z'
+      }
     ],
     isVisible: true
   },
@@ -121,9 +211,31 @@ export const memoryDevices: MemoryDevice[] = [
     weight: 6.6,
     warranty: 60,
     rating: 4.5,
+    sku: 'SA2000M8/500G',
+    ean: '740617293395',
     offers: [
-      { id: 'o9', price: 69.99, currency: 'USD', countryCode: 'US', store: 'Amazon' },
-      { id: 'o10', price: 74.99, currency: 'EUR', countryCode: 'ES', store: 'PCComponentes' }
+      { 
+        id: 'o9', 
+        price: 69.99, 
+        currency: 'USD', 
+        countryCode: 'US', 
+        store: 'Amazon',
+        url: 'https://www.amazon.com/Kingston-Internal-Security-SA2000M8-500G/dp/B07VXCFNVS',
+        inactive: false,
+        createdDateUTC: '2023-03-10T15:35:00Z',
+        lastCheckedDateUTC: '2023-06-20T17:25:00Z'
+      },
+      { 
+        id: 'o10', 
+        price: 74.99, 
+        currency: 'EUR', 
+        countryCode: 'ES', 
+        store: 'PCComponentes',
+        url: 'https://www.pccomponentes.com/kingston-a2000-500gb-ssd-m2-2280-nvme-pcie-30',
+        inactive: false,
+        createdDateUTC: '2023-03-15T10:20:00Z',
+        lastCheckedDateUTC: '2023-06-19T14:40:00Z'
+      }
     ],
     isVisible: true
   },
@@ -147,9 +259,31 @@ export const memoryDevices: MemoryDevice[] = [
     weight: 720,
     warranty: 60,
     rating: 4.7,
+    sku: 'WD4005FZBX',
+    ean: '718037862996',
     offers: [
-      { id: 'o11', price: 149.99, currency: 'USD', countryCode: 'US', store: 'Amazon' },
-      { id: 'o12', price: 159.99, currency: 'EUR', countryCode: 'FR', store: 'LDLC' }
+      { 
+        id: 'o11', 
+        price: 149.99, 
+        currency: 'USD', 
+        countryCode: 'US', 
+        store: 'Amazon',
+        url: 'https://www.amazon.com/Black-4TB-Performance-Hard-Drive/dp/B0713R3Y6F',
+        inactive: false,
+        createdDateUTC: '2023-03-20T09:10:00Z',
+        lastCheckedDateUTC: '2023-06-21T16:15:00Z'
+      },
+      { 
+        id: 'o12', 
+        price: 159.99, 
+        currency: 'EUR', 
+        countryCode: 'FR', 
+        store: 'LDLC',
+        url: 'https://www.ldlc.com/fiche/PB00393722.html',
+        inactive: false,
+        createdDateUTC: '2023-03-25T12:40:00Z',
+        lastCheckedDateUTC: '2023-06-18T11:30:00Z'
+      }
     ],
     isVisible: true
   },
@@ -171,9 +305,31 @@ export const memoryDevices: MemoryDevice[] = [
     weight: 83,
     warranty: 60,
     rating: 4.8,
+    sku: 'SDSSDE80-1T00-G25',
+    ean: '619659169077',
     offers: [
-      { id: 'o13', price: 179.99, currency: 'USD', countryCode: 'US', store: 'B&H' },
-      { id: 'o14', price: 189.99, currency: 'EUR', countryCode: 'DE', store: 'Saturn' }
+      { 
+        id: 'o13', 
+        price: 179.99, 
+        currency: 'USD', 
+        countryCode: 'US', 
+        store: 'B&H',
+        url: 'https://www.bhphotovideo.com/c/product/1595364-REG/sandisk_sdssde81_1t00_an1245_1tb_extreme_pro_portable.html',
+        inactive: false,
+        createdDateUTC: '2023-04-05T14:20:00Z',
+        lastCheckedDateUTC: '2023-06-22T09:55:00Z'
+      },
+      { 
+        id: 'o14', 
+        price: 189.99, 
+        currency: 'EUR', 
+        countryCode: 'DE', 
+        store: 'Saturn',
+        url: 'https://www.saturn.de/de/product/_sandisk-extreme-pro-portable-ssd-v2-1-tb-ssd-schwarz-2672559.html',
+        inactive: false,
+        createdDateUTC: '2023-04-10T11:05:00Z',
+        lastCheckedDateUTC: '2023-06-17T13:25:00Z'
+      }
     ],
     isVisible: true
   },
@@ -196,9 +352,32 @@ export const memoryDevices: MemoryDevice[] = [
     weight: 8,
     warranty: 60,
     rating: 4.8,
+    sku: 'CT2000P5PSSD8',
+    ean: '649528903969',
     offers: [
-      { id: 'o15', price: 219.99, currency: 'USD', countryCode: 'US', store: 'Amazon' },
-      { id: 'o16', price: 229.99, currency: 'EUR', countryCode: 'FR', store: 'Cdiscount' }
+      { 
+        id: 'o15', 
+        price: 219.99, 
+        currency: 'USD', 
+        countryCode: 'US', 
+        store: 'Amazon',
+        url: 'https://www.amazon.com/Crucial-Plus-2000GB-PCIe-4-0/dp/B098WL46RS',
+        inactive: false,
+        createdDateUTC: '2023-04-15T16:50:00Z',
+        lastCheckedDateUTC: '2023-06-23T12:35:00Z'
+      },
+      { 
+        id: 'o16', 
+        price: 229.99, 
+        currency: 'EUR', 
+        countryCode: 'FR', 
+        store: 'Cdiscount',
+        url: 'https://www.cdiscount.com/informatique/ssd/crucial-p5-plus-ssd-interne-2to-3d-nand-nvme-pci/f-10700043-cru0649528903969.html',
+        inactive: true,
+        inactivedDateUTC: '2023-05-15T09:00:00Z',
+        createdDateUTC: '2023-04-20T10:30:00Z',
+        lastCheckedDateUTC: '2023-05-15T09:00:00Z'
+      }
     ],
     isVisible: true
   }
