@@ -40,7 +40,7 @@ export interface MemoryDevice {
 }
 
 export type FilterConfig = {
-  field: keyof MemoryDevice | 'price' | 'euroPerGB';
+  field: keyof MemoryDevice | 'price' | 'euroPerGB' | 'offerUrl';
   label: string;
   type: 'range' | 'select' | 'text' | 'switch' | 'checkbox';
   options?: string[];
@@ -51,6 +51,6 @@ export type FilterConfig = {
 }
 
 export type SortConfig = {
-  field: keyof MemoryDevice | 'price' | 'euroPerGB';
+  field: keyof MemoryDevice | 'price' | 'euroPerGB' | 'offerUrl';
   direction: 'asc' | 'desc';
 }
