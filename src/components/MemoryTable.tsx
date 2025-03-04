@@ -1,7 +1,8 @@
+
 import React from 'react';
 import { FilterConfig, MemoryDevice, SortConfig } from '../types/memory';
 import { getBestPrice } from '@/utils/filter-utils';
-import { ArrowDown, ArrowUp } from 'lucide-react';
+import { ArrowDown, ArrowUp, ExternalLink } from 'lucide-react';
 
 interface MemoryTableProps {
   devices: MemoryDevice[];
@@ -48,6 +49,20 @@ const MemoryTable = ({ devices, filters, sortConfig, onSort }: MemoryTableProps)
       : <ArrowDown className="inline ml-1 w-4 h-4" />;
   };
 
+  const getActiveOffer = (device: MemoryDevice) => {
+    return device.offers.find(offer => !offer.inactive) || device.offers[0];
+  };
+
+  const getOfferTitle = (device: MemoryDevice) => {
+    const offer = getActiveOffer(device);
+    if (!offer) return null;
+    
+    return {
+      title: `${device.title} - ${offer.store || 'Unknown store'}`,
+      url: offer.url
+    };
+  };
+
   // Desired column order: Capacité (GB), Prix, Euro/GB, Marque, Technologie, Vitesse lecture, Vitesse écriture, RPM, Cache, Format, Type, Interface, Poids, Garantie, Évaluation
   const columnOrder = [
     'capacityGB', 'price', 'euroPerGB', 'brand', 'technology', 'readSpeed', 'writeSpeed', 'rpm',
@@ -90,21 +105,48 @@ const MemoryTable = ({ devices, filters, sortConfig, onSort }: MemoryTableProps)
               </td>
             </tr>
           ) : (
-            devices.map((device, i) => (
-              <tr
-                key={device.id}
-                className={`
-                  border-b border-border hover:bg-muted/20 transition-colors
-                  ${i % 2 === 0 ? 'bg-background' : 'bg-muted/10'}
-                `}
-              >
-                {visibleFilters.map((filter) => (
-                  <td key={`${device.id}-${filter.field}`} className="px-4 py-4 text-sm">
-                    {formatValue(device, filter.field, filter.unit)}
-                  </td>
-                ))}
-              </tr>
-            ))
+            devices.map((device, i) => {
+              const offerInfo = getOfferTitle(device);
+              
+              return (
+                <React.Fragment key={device.id}>
+                  {/* Offer title row */}
+                  {offerInfo && (
+                    <tr className="bg-muted/30 border-t border-border">
+                      <td colSpan={visibleFilters.length} className="px-4 py-2 text-xs text-muted-foreground">
+                        <div className="flex items-center justify-between">
+                          <span className="font-medium">{offerInfo.title}</span>
+                          {offerInfo.url && (
+                            <a 
+                              href={offerInfo.url} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="flex items-center text-primary hover:underline"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              Visit store <ExternalLink className="ml-1 w-3 h-3" />
+                            </a>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                  {/* Data row */}
+                  <tr
+                    className={`
+                      border-b border-border hover:bg-muted/20 transition-colors
+                      ${i % 2 === 0 ? 'bg-background' : 'bg-muted/10'}
+                    `}
+                  >
+                    {visibleFilters.map((filter) => (
+                      <td key={`${device.id}-${filter.field}`} className="px-4 py-4 text-sm">
+                        {formatValue(device, filter.field, filter.unit)}
+                      </td>
+                    ))}
+                  </tr>
+                </React.Fragment>
+              );
+            })
           )}
         </tbody>
       </table>
