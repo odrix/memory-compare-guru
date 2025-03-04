@@ -27,7 +27,7 @@ const FilterControl: React.FC<FilterControlProps> = ({
   devices,
   onFilterChange,
 }) => {
-  const { field, label, type, options, min, max, unit } = filter;
+  const { field, label, type, options, min, max, step, unit } = filter;
 
   switch (type) {
     case 'range':
@@ -44,7 +44,7 @@ const FilterControl: React.FC<FilterControlProps> = ({
           <Slider
             min={min}
             max={max}
-            step={1}
+            step={step}
             value={[value.min, value.max]}
             onValueChange={(vals) => {
               onFilterChange(field, {
