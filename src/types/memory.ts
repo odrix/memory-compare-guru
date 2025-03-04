@@ -46,6 +46,7 @@ export type FilterConfig = {
   options?: string[];
   min?: number;
   max?: number;
+  step?: number;
   unit?: string;
   isVisible: boolean;
 }

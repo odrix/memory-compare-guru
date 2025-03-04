@@ -96,7 +96,7 @@ const MemoryTable = ({
   // Get visible filters and sort them according to the column order
   const getVisibleFilters = () => {
     let visFilters = filters
-      .filter(filter => filter.isVisible || filter.field === 'euroPerGB')
+      .filter(filter => filter.isVisible)
       .sort((a, b) => {
         const indexA = columnOrder.indexOf(a.field);
         const indexB = columnOrder.indexOf(b.field);
