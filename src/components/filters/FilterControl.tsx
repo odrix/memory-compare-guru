@@ -37,9 +37,6 @@ const FilterControl: React.FC<FilterControlProps> = ({
             <span className="text-sm text-muted-foreground">
               {value.min} {unit}
             </span>
-            <span className="text-sm font-medium">
-              {value.min} - {value.max} {unit}
-            </span>
             <span className="text-sm text-muted-foreground">
               {value.max} {unit}
             </span>

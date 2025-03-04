@@ -26,19 +26,19 @@ export const getDefaultFilters = (): FilterConfig[] => [
     min: 0,
     max: 10,
     unit: '€/GB',
-    isVisible: false,
+    isVisible: true,
   },
   {
     field: 'brand',
     label: 'Marque',
     type: 'select',
-    isVisible: true,
+    isVisible: false,
   },
   {
     field: 'technology',
     label: 'Technologie',
     type: 'select',
-    isVisible: true,
+    isVisible: false,
   },
   {
     field: 'readSpeed',
@@ -65,7 +65,7 @@ export const getDefaultFilters = (): FilterConfig[] => [
     min: 0,
     max: 15000,
     unit: 'RPM',
-    isVisible: true,
+    isVisible: false,
   },
   {
     field: 'cache',
@@ -80,19 +80,19 @@ export const getDefaultFilters = (): FilterConfig[] => [
     field: 'format',
     label: 'Format',
     type: 'select',
-    isVisible: true,
+    isVisible: false,
   },
   {
     field: 'type',
     label: 'Type',
     type: 'select',
-    isVisible: true,
+    isVisible: false,
   },
   {
     field: 'interface',
     label: 'Interface',
     type: 'select',
-    isVisible: true,
+    isVisible: false,
   },
   {
     field: 'weight',
@@ -101,7 +101,7 @@ export const getDefaultFilters = (): FilterConfig[] => [
     min: 0,
     max: 1000,
     unit: 'g',
-    isVisible: true,
+    isVisible: false,
   },
   {
     field: 'warranty',
@@ -110,7 +110,7 @@ export const getDefaultFilters = (): FilterConfig[] => [
     min: 0,
     max: 10,
     unit: 'ans',
-    isVisible: true,
+    isVisible: false,
   },
   {
     field: 'rating',
