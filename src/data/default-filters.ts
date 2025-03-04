@@ -26,7 +26,7 @@ export const getDefaultFilters = (): FilterConfig[] => [
     label: 'Euro/GB',
     type: 'range',
     min: 0,
-    max: 10,
+    max: 1,
     step: 0.01,
     unit: '€/GB',
     isVisible: true,
