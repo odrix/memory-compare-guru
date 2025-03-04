@@ -18,6 +18,7 @@ const Index = () => {
     field: 'capacityGB',
     direction: 'desc'
   });
+  const [showOfferTitles, setShowOfferTitles] = useState<boolean>(true);
 
   useEffect(() => {
     const prices = devices
@@ -39,11 +40,10 @@ const Index = () => {
   useEffect(() => {
     let result = [...devices];
     
-    // Process activeFilters by handling 'all' value for select filters
     const processedFilters = { ...activeFilters };
     Object.keys(processedFilters).forEach(key => {
       if (processedFilters[key] === 'all') {
-        delete processedFilters[key]; // Remove 'all' filters as they should not filter the data
+        delete processedFilters[key];
       }
     });
     
@@ -104,6 +104,16 @@ const Index = () => {
     setIsFilterPanelOpen(prev => !prev);
   };
 
+  const handleToggleOfferTitles = (checked: boolean) => {
+    setShowOfferTitles(checked);
+    
+    toast({
+      title: "Affichage modifié",
+      description: checked ? "Titres des offres affichés" : "Titres des offres masqués",
+      duration: 1500,
+    });
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <PageHeader />
@@ -121,6 +131,8 @@ const Index = () => {
         onClose={() => setIsFilterPanelOpen(false)}
         sortConfig={sortConfig}
         onSort={handleSort}
+        showOfferTitles={showOfferTitles}
+        onToggleOfferTitles={handleToggleOfferTitles}
       />
 
       <PageFooter />

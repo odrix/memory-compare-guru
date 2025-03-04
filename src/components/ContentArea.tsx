@@ -1,3 +1,4 @@
+
 import React from 'react';
 import MemoryTable from '@/components/MemoryTable';
 import FilterPanel from '@/components/FilterPanel';
@@ -17,6 +18,8 @@ interface ContentAreaProps {
   onClose: () => void;
   sortConfig: SortConfig;
   onSort: (field: string) => void;
+  showOfferTitles: boolean;
+  onToggleOfferTitles: (checked: boolean) => void;
 }
 
 const ContentArea = ({
@@ -31,7 +34,9 @@ const ContentArea = ({
   onResetFilters,
   onClose,
   sortConfig,
-  onSort
+  onSort,
+  showOfferTitles,
+  onToggleOfferTitles
 }: ContentAreaProps) => {
   return (
     <main className="flex-1 container mx-auto px-4 py-8">
@@ -51,6 +56,8 @@ const ContentArea = ({
             onResetFilters={onResetFilters}
             isOpen={isFilterPanelOpen}
             onClose={onClose}
+            showOfferTitles={showOfferTitles}
+            onToggleOfferTitles={onToggleOfferTitles}
           />
         </div>
 
@@ -67,6 +74,7 @@ const ContentArea = ({
               filters={filters}
               sortConfig={sortConfig}
               onSort={onSort}
+              showOfferTitles={showOfferTitles}
             />
           </div>
         </div>

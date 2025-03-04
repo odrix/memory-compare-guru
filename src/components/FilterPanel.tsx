@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { FilterConfig, MemoryDevice } from '../types/memory';
 import { Switch } from '@/components/ui/switch';
@@ -24,6 +25,8 @@ interface FilterPanelProps {
   onResetFilters: () => void;
   isOpen: boolean;
   onClose: () => void;
+  showOfferTitles: boolean;
+  onToggleOfferTitles: (checked: boolean) => void;
 }
 
 const FilterPanel = ({
@@ -34,7 +37,9 @@ const FilterPanel = ({
   onVisibilityChange,
   onResetFilters,
   isOpen,
-  onClose
+  onClose,
+  showOfferTitles,
+  onToggleOfferTitles
 }: FilterPanelProps) => {
   const renderFilterControl = (filter: FilterConfig) => {
     const { field, label, type, options, min, max, unit } = filter;
@@ -163,6 +168,23 @@ const FilterPanel = ({
       </div>
 
       <div className="p-6 pt-4 space-y-8">
+        {/* Display Settings Section */}
+        <div className="space-y-4 border-b border-border pb-4">
+          <h3 className="text-md font-semibold">Affichage</h3>
+          <div className="flex items-center justify-between">
+            <Label htmlFor="show-offer-titles" className="text-sm">
+              Afficher les titres des offres
+            </Label>
+            <Switch
+              id="show-offer-titles"
+              checked={showOfferTitles}
+              onCheckedChange={onToggleOfferTitles}
+              className="bg-gray-300 data-[state=checked]:bg-green-300"
+            />
+          </div>
+        </div>
+
+        {/* Filters Section */}
         {filters.map((filter) => (
           <div key={filter.field} className="space-y-3">
             <div className="flex items-center justify-between">

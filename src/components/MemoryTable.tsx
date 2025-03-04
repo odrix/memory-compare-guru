@@ -9,9 +9,16 @@ interface MemoryTableProps {
   filters: FilterConfig[];
   sortConfig: SortConfig;
   onSort: (field: string) => void;
+  showOfferTitles: boolean;
 }
 
-const MemoryTable = ({ devices, filters, sortConfig, onSort }: MemoryTableProps) => {
+const MemoryTable = ({ 
+  devices, 
+  filters, 
+  sortConfig, 
+  onSort,
+  showOfferTitles 
+}: MemoryTableProps) => {
   const formatValue = (device: MemoryDevice, field: string, unit?: string) => {
     if (field === 'price') {
       const price = getBestPrice(device);
@@ -23,6 +30,23 @@ const MemoryTable = ({ devices, filters, sortConfig, onSort }: MemoryTableProps)
       const capacity = device.capacityGB;
       if (price !== null && capacity) {
         return `${(price / capacity).toFixed(2)} €/GB`;
+      }
+      return 'N/A';
+    }
+
+    if (field === 'offerUrl') {
+      const offer = getActiveOffer(device);
+      if (offer && offer.url) {
+        return (
+          <a
+            href={offer.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center text-primary hover:underline"
+          >
+            Visit store <ExternalLink className="ml-1 w-3 h-3" />
+          </a>
+        );
       }
       return 'N/A';
     }
@@ -70,13 +94,29 @@ const MemoryTable = ({ devices, filters, sortConfig, onSort }: MemoryTableProps)
   ];
 
   // Get visible filters and sort them according to the column order
-  const visibleFilters = filters
-    .filter(filter => filter.isVisible || filter.field === 'euroPerGB')
-    .sort((a, b) => {
-      const indexA = columnOrder.indexOf(a.field);
-      const indexB = columnOrder.indexOf(b.field);
-      return indexA - indexB;
-    });
+  const getVisibleFilters = () => {
+    let visFilters = filters
+      .filter(filter => filter.isVisible || filter.field === 'euroPerGB')
+      .sort((a, b) => {
+        const indexA = columnOrder.indexOf(a.field);
+        const indexB = columnOrder.indexOf(b.field);
+        return indexA - indexB;
+      });
+
+    // Add URL column if offer titles are not shown
+    if (!showOfferTitles) {
+      visFilters.push({
+        field: 'offerUrl',
+        label: 'URL',
+        type: 'text',
+        isVisible: true
+      });
+    }
+
+    return visFilters;
+  };
+
+  const visibleFilters = getVisibleFilters();
 
   return (
     <div className="table-container overflow-x-auto">
@@ -110,8 +150,8 @@ const MemoryTable = ({ devices, filters, sortConfig, onSort }: MemoryTableProps)
               
               return (
                 <React.Fragment key={device.id}>
-                  {/* Offer title row */}
-                  {offerInfo && (
+                  {/* Offer title row - only show if showOfferTitles is true */}
+                  {showOfferTitles && offerInfo && (
                     <tr className="bg-muted/30 border-t border-border">
                       <td colSpan={visibleFilters.length} className="px-4 py-2 text-xs text-muted-foreground">
                         <div className="flex items-center justify-between">
