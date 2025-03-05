@@ -1,4 +1,5 @@
-import { FilterConfig, MemoryDevice, SortConfig } from "../types/memory";
+
+import { FilterConfig, MemoryDevice, SortConfig, Offer } from "../types/memory";
 
 export const getMinMaxValues = (devices: MemoryDevice[], field: keyof MemoryDevice) => {
   const values = devices
@@ -32,12 +33,17 @@ export const getAllActivePrices = (device: MemoryDevice) => {
     .map(offer => offer.price);
 };
 
+export const getActiveOffers = (device: MemoryDevice): Offer[] => {
+  if (!device.offers || device.offers.length === 0) return [];
+  return device.offers.filter(offer => !offer.inactive);
+};
+
 export const filterDevices = (
   devices: MemoryDevice[],
   filters: { [key: string]: any }
 ) => {
   return devices.filter(device => {
-    // Check all filter conditions
+    // For each device, check if it passes all the filters
     for (const [key, value] of Object.entries(filters)) {
       if (!value) continue; // Skip empty filters
 
@@ -76,25 +82,45 @@ export const filterDevices = (
 };
 
 export const sortDevices = (devices: MemoryDevice[], sortConfig: SortConfig) => {
-  return [...devices].sort((a, b) => {
-    let valueA, valueB;
-    
-    if (sortConfig.field === 'price') {
-      // Get best price from active offers for sorting
-      valueA = getBestPrice(a) || 0;
-      valueB = getBestPrice(b) || 0;
-    } else if (sortConfig.field === 'euroPerGB') {
-      const priceA = getBestPrice(a) || 0;
-      const priceB = getBestPrice(b) || 0;
-      const capacityA = a.capacityGB || 1;
-      const capacityB = b.capacityGB || 1;
+  // First, create a copy of the devices array to avoid mutation
+  const sortedDevices = [...devices];
+  
+  // For price and euroPerGB fields, we need to expand each device into its offers
+  if (sortConfig.field === 'price' || sortConfig.field === 'euroPerGB') {
+    return sortedDevices.sort((a, b) => {
+      const offersA = getActiveOffers(a);
+      const offersB = getActiveOffers(b);
       
-      valueA = priceA / capacityA;
-      valueB = priceB / capacityB;
-    } else {
-      valueA = a[sortConfig.field] as any;
-      valueB = b[sortConfig.field] as any;
-    }
+      // Handle cases where one or both devices have no offers
+      if (offersA.length === 0 && offersB.length === 0) return 0;
+      if (offersA.length === 0) return sortConfig.direction === 'asc' ? -1 : 1;
+      if (offersB.length === 0) return sortConfig.direction === 'asc' ? 1 : -1;
+      
+      // Get the best prices (or euro per GB) for comparison
+      let valueA, valueB;
+      
+      if (sortConfig.field === 'price') {
+        valueA = Math.min(...offersA.map(offer => offer.price));
+        valueB = Math.min(...offersB.map(offer => offer.price));
+      } else {
+        // Euro per GB calculation
+        const priceA = Math.min(...offersA.map(offer => offer.price));
+        const priceB = Math.min(...offersB.map(offer => offer.price));
+        const capacityA = a.capacityGB || 1;
+        const capacityB = b.capacityGB || 1;
+        
+        valueA = priceA / capacityA;
+        valueB = priceB / capacityB;
+      }
+      
+      return sortConfig.direction === 'asc' ? valueA - valueB : valueB - valueA;
+    });
+  }
+  
+  // For other fields, sort normally by the field value
+  return sortedDevices.sort((a, b) => {
+    const valueA = a[sortConfig.field] as any;
+    const valueB = b[sortConfig.field] as any;
     
     // Handle undefined values
     if (valueA === undefined) return sortConfig.direction === 'asc' ? -1 : 1;

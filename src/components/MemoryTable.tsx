@@ -18,45 +18,26 @@ const MemoryTable = ({
   onSort,
   showOfferTitles 
 }: MemoryTableProps) => {
-  const formatValue = (device: MemoryDevice, field: string, unit?: string) => {
-    if (field === 'price') {
-      // Display all active offers prices instead of just the best price
-      const activeOffers = device.offers.filter(offer => !offer.inactive);
-      if (activeOffers.length === 0) return 'N/A';
-      
-      return activeOffers.map(offer => 
-        `${offer.price.toFixed(2)}${offer.currency === 'EUR' ? '€' : '$'}`
-      ).join(', ');
+  const formatValue = (device: MemoryDevice, field: string, unit?: string, offer?: Offer) => {
+    if (field === 'price' && offer) {
+      return `${offer.price.toFixed(2)}${offer.currency === 'EUR' ? '€' : '$'}`;
     }
 
-    if (field === 'euroPerGB') {
-      // Calculate euro per GB for all active offers
-      const activeOffers = device.offers.filter(offer => !offer.inactive);
-      if (activeOffers.length === 0 || !device.capacityGB) return 'N/A';
-      
-      return activeOffers.map(offer => 
-        `${(offer.price / device.capacityGB).toFixed(2)} €/GB`
-      ).join(', ');
+    if (field === 'euroPerGB' && offer) {
+      if (!device.capacityGB) return 'N/A';
+      return `${(offer.price / device.capacityGB).toFixed(2)} €/GB`;
     }
 
-    if (field === 'offerUrl') {
-      const activeOffers = device.offers.filter(offer => !offer.inactive);
-      if (activeOffers.length === 0) return 'N/A';
-      
+    if (field === 'offerUrl' && offer) {
       return (
-        <div className="flex flex-col gap-1">
-          {activeOffers.map(offer => (
-            <a
-              key={offer.id}
-              href={offer.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center text-primary hover:underline text-xs"
-            >
-              {offer.store || 'Visit store'} <ExternalLink className="ml-1 w-3 h-3" />
-            </a>
-          ))}
-        </div>
+        <a
+          href={offer.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center text-primary hover:underline text-xs"
+        >
+          {offer.store || 'Visit store'} <ExternalLink className="ml-1 w-3 h-3" />
+        </a>
       );
     }
 
@@ -84,16 +65,6 @@ const MemoryTable = ({
 
   const getActiveOffers = (device: MemoryDevice): Offer[] => {
     return device.offers.filter(offer => !offer.inactive);
-  };
-
-  const getOfferTitle = (device: MemoryDevice) => {
-    const activeOffers = getActiveOffers(device);
-    if (activeOffers.length === 0) return null;
-    
-    return {
-      title: `${device.title} - ${activeOffers.length} active offers`,
-      offers: activeOffers
-    };
   };
 
   // Desired column order: Capacité (GB), Prix, Euro/GB, Marque, Technologie, Vitesse lecture, Vitesse écriture, RPM, Cache, Format, Type, Interface, Poids, Garantie, Évaluation
@@ -154,26 +125,17 @@ const MemoryTable = ({
               </td>
             </tr>
           ) : (
-            devices.map((device, i) => {
-              const offerInfo = getOfferTitle(device);
+            devices.flatMap((device, deviceIndex) => {
+              const activeOffers = getActiveOffers(device);
               
-              return (
-                <React.Fragment key={device.id}>
-                  {/* Offer title row - only show if showOfferTitles is true */}
-                  {showOfferTitles && offerInfo && (
-                    <tr className="bg-muted/30 border-t border-border">
-                      <td colSpan={visibleFilters.length} className="px-4 py-2 text-xs text-muted-foreground">
-                        <div className="flex items-center justify-between">
-                          <span className="font-medium">{offerInfo.title}</span>
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                  {/* Data row */}
-                  <tr
+              if (activeOffers.length === 0) {
+                // Render a single row for devices with no active offers
+                return (
+                  <tr 
+                    key={device.id} 
                     className={`
                       border-b border-border hover:bg-muted/20 transition-colors
-                      ${i % 2 === 0 ? 'bg-background' : 'bg-muted/10'}
+                      ${deviceIndex % 2 === 0 ? 'bg-background' : 'bg-muted/10'}
                     `}
                   >
                     {visibleFilters.map((filter) => (
@@ -182,6 +144,41 @@ const MemoryTable = ({
                       </td>
                     ))}
                   </tr>
+                );
+              }
+              
+              // Render a group with a row for each active offer
+              return (
+                <React.Fragment key={device.id}>
+                  {/* Offer title row - only show if showOfferTitles is true */}
+                  {showOfferTitles && (
+                    <tr className="bg-muted/30 border-t border-border">
+                      <td colSpan={visibleFilters.length} className="px-4 py-2 text-xs text-muted-foreground">
+                        <div className="flex items-center justify-between">
+                          <span className="font-medium">{device.title} - {activeOffers.length} active offers</span>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                  
+                  {/* Render a row for each offer */}
+                  {activeOffers.map((offer, offerIndex) => (
+                    <tr
+                      key={`${device.id}-${offer.id}`}
+                      className={`
+                        border-b border-border hover:bg-muted/20 transition-colors
+                        ${(deviceIndex + offerIndex) % 2 === 0 ? 'bg-background' : 'bg-muted/10'}
+                      `}
+                    >
+                      {visibleFilters.map((filter) => (
+                        <td key={`${device.id}-${offer.id}-${filter.field}`} className="px-4 py-4 text-sm">
+                          {['price', 'euroPerGB', 'offerUrl'].includes(filter.field)
+                            ? formatValue(device, filter.field, filter.unit, offer)
+                            : formatValue(device, filter.field, filter.unit)}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
                 </React.Fragment>
               );
             })
