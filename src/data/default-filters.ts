@@ -1,3 +1,4 @@
+
 import { FilterConfig } from '../types/memory';
 
 export const getDefaultFilters = (): FilterConfig[] => [
@@ -26,7 +27,7 @@ export const getDefaultFilters = (): FilterConfig[] => [
     label: 'Euro/GB',
     type: 'range',
     min: 0,
-    max: 1,
+    max: 2,
     step: 0.001,
     unit: '€/GB',
     isVisible: true,

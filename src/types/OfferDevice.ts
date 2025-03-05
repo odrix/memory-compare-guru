@@ -1,4 +1,10 @@
+
 import { Device } from './Device';
 import { Offer } from './Offer';
 
-export interface OfferDevice extends Device, Offer {}
+export interface OfferDevice {
+  device: Device;
+  offer: Offer & {
+    euroPerGB?: number;
+  };
+}

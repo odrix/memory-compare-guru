@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { FilterConfig, SortConfig, OfferDevice } from '../types/memory';
 import { ArrowDown, ArrowUp, ExternalLink } from 'lucide-react';
@@ -25,8 +26,8 @@ const MemoryTable = ({
     }
 
     if (field === 'euroPerGB') {
-      if (!device.capacityGB) return 'N/A';
-      return `${(offer.price / device.capacityGB).toFixed(3)} €/GB`;
+      if (!offer.euroPerGB) return 'N/A';
+      return `${offer.euroPerGB.toFixed(3)} €/GB`;
     }
 
     if (field === 'offerUrl') {
@@ -42,7 +43,7 @@ const MemoryTable = ({
       );
     }
 
-    const value = device[field as keyof OfferDevice];
+    const value = device[field as keyof typeof device];
     if (value === undefined || value === null) return 'N/A';
 
     // Format based on field type

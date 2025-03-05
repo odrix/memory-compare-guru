@@ -37,7 +37,6 @@ export const getActiveOffers = (device: Device): Offer[] => {
   return device.offers.filter(offer => !offer.inactive);
 };
 
-
 export const createOfferDevices = (devices: Device[]): OfferDevice[] => {
     const offerDevices: OfferDevice[] = [];
     
@@ -45,9 +44,16 @@ export const createOfferDevices = (devices: Device[]): OfferDevice[] => {
       const activeOffers = getActiveOffers(device);
       
       activeOffers.forEach(offer => {
+        const euroPerGB = device.capacityGB ? 
+          Number((offer.price / device.capacityGB).toFixed(3)) : 
+          undefined;
+        
         offerDevices.push({
           device,
-          offer
+          offer: {
+            ...offer,
+            euroPerGB
+          }
         });
       });
     });
