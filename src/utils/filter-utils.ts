@@ -18,7 +18,18 @@ export const getUniqueValues = (devices: MemoryDevice[], field: keyof MemoryDevi
 
 export const getBestPrice = (device: MemoryDevice) => {
   if (!device.offers || device.offers.length === 0) return null;
-  return Math.min(...device.offers.map(offer => offer.price));
+  
+  const activeOffers = device.offers.filter(offer => !offer.inactive);
+  if (activeOffers.length === 0) return null;
+  
+  return Math.min(...activeOffers.map(offer => offer.price));
+};
+
+export const getAllActivePrices = (device: MemoryDevice) => {
+  if (!device.offers || device.offers.length === 0) return [];
+  return device.offers
+    .filter(offer => !offer.inactive)
+    .map(offer => offer.price);
 };
 
 export const filterDevices = (
@@ -31,10 +42,17 @@ export const filterDevices = (
       if (!value) continue; // Skip empty filters
 
       if (key === 'price') {
-        const price = getBestPrice(device);
-        if (price === null) return false;
-        if (value.min && price < value.min) return false;
-        if (value.max && price > value.max) return false;
+        const prices = getAllActivePrices(device);
+        if (prices.length === 0) return false;
+        
+        // If any price is within range, keep the device
+        const anyPriceInRange = prices.some(price => {
+          if (value.min && price < value.min) return false;
+          if (value.max && price > value.max) return false;
+          return true;
+        });
+        
+        if (!anyPriceInRange) return false;
       } else if (key in device) {
         const fieldValue = device[key as keyof MemoryDevice];
         
@@ -62,8 +80,17 @@ export const sortDevices = (devices: MemoryDevice[], sortConfig: SortConfig) => 
     let valueA, valueB;
     
     if (sortConfig.field === 'price') {
+      // Get best price from active offers for sorting
       valueA = getBestPrice(a) || 0;
       valueB = getBestPrice(b) || 0;
+    } else if (sortConfig.field === 'euroPerGB') {
+      const priceA = getBestPrice(a) || 0;
+      const priceB = getBestPrice(b) || 0;
+      const capacityA = a.capacityGB || 1;
+      const capacityB = b.capacityGB || 1;
+      
+      valueA = priceA / capacityA;
+      valueB = priceB / capacityB;
     } else {
       valueA = a[sortConfig.field] as any;
       valueB = b[sortConfig.field] as any;
