@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { FilterConfig, OfferDevice } from '../types/memory';
-import { X } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import DisplaySettings from './filters/DisplaySettings';
 import FilterItem from './filters/FilterItem';
 
@@ -39,7 +39,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
       <div className="sticky top-0 bg-card z-10 p-6 pb-4 border-b border-border">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">Filtres</h2>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-4">
             <button
               onClick={onResetFilters}
               className="text-sm text-primary hover:text-primary/80 transition-colors"
@@ -51,7 +51,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
               className="p-1 rounded-full hover:bg-muted transition-colors md:hidden"
               aria-label="Close filters"
             >
-              <X size={20} />
+              <ChevronRight size={24} />
             </button>
           </div>
         </div>

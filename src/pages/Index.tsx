@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { FilterConfig, Device, SortConfig, OfferDevice } from '@/types/memory';
 import { memoryDevices, getDefaultFilters } from '@/data/memory-data';
@@ -23,8 +22,19 @@ const Index = () => {
     direction: 'desc'
   });
   const [showOfferTitles, setShowOfferTitles] = useState<boolean>(true);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Initialize offerDevices from devices
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   useEffect(() => {
     const newOfferDevices = createOfferDevices(devices);
     setOfferDevices(newOfferDevices);
@@ -69,11 +79,13 @@ const Index = () => {
       [field]: value
     }));
 
-    toast({
-      title: "Filtre appliqué",
-      description: `Filtre ${field} mis à jour`,
-      duration: 1500,
-    });
+    if (!isMobile) {
+      toast({
+        title: "Filtre appliqué",
+        description: `Filtre ${field} mis à jour`,
+        duration: 1500,
+      });
+    }
   };
 
   const handleColumnVisibilityChange = (field: string, visible: boolean) => {
@@ -117,14 +129,15 @@ const Index = () => {
   const handleToggleOfferTitles = (checked: boolean) => {
     setShowOfferTitles(checked);
     
-    toast({
-      title: "Affichage modifié",
-      description: checked ? "Titres des offres affichés" : "Titres des offres masqués",
-      duration: 1500,
-    });
+    if (!isMobile) {
+      toast({
+        title: "Affichage modifié",
+        description: checked ? "Titres des offres affichés" : "Titres des offres masqués",
+        duration: 1500,
+      });
+    }
   };
 
-  // Create a modified ContentArea component to pass offerDevices
   const renderContentArea = () => {
     const contentAreaProps = {
       isFilterPanelOpen,
