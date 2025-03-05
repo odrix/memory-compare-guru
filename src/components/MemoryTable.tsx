@@ -26,7 +26,7 @@ const MemoryTable = ({
 
     if (field === 'euroPerGB') {
       if (!device.capacityGB) return 'N/A';
-      return `${(offer.price / device.capacityGB).toFixed(2)} €/GB`;
+      return `${(offer.price / device.capacityGB).toFixed(3)} €/GB`;
     }
 
     if (field === 'offerUrl') {
