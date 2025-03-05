@@ -2,7 +2,7 @@
 import React from 'react';
 import MemoryTable from '@/components/MemoryTable';
 import FilterPanel from '@/components/FilterPanel';
-import { FilterConfig, MemoryDevice, SortConfig } from '@/types/memory';
+import { FilterConfig, MemoryDevice, SortConfig, OfferDevice } from '../types/memory';
 import FilterToggle from './FilterToggle';
 
 interface ContentAreaProps {
@@ -11,7 +11,7 @@ interface ContentAreaProps {
   filters: FilterConfig[];
   activeFilters: { [key: string]: any };
   devices: MemoryDevice[];
-  filteredDevices: MemoryDevice[];
+  offerDevices: OfferDevice[];
   onFilterChange: (field: string, value: any) => void;
   onVisibilityChange: (field: string, visible: boolean) => void;
   onResetFilters: () => void;
@@ -28,7 +28,7 @@ const ContentArea = ({
   filters,
   activeFilters,
   devices,
-  filteredDevices,
+  offerDevices,
   onFilterChange,
   onVisibilityChange,
   onResetFilters,
@@ -64,13 +64,13 @@ const ContentArea = ({
         <div className="flex-1 md:h-[calc(100vh-12rem)] md:overflow-y-auto">
           <div className="mb-4 flex items-center justify-between">
             <p className="text-sm text-muted-foreground">
-              Affichage de {filteredDevices.length} sur {devices.length} appareils
+              Affichage de {offerDevices.length} offres
             </p>
           </div>
           
           <div className="animate-fade-in">
             <MemoryTable 
-              devices={filteredDevices}
+              offerDevices={offerDevices}
               filters={filters}
               sortConfig={sortConfig}
               onSort={onSort}
