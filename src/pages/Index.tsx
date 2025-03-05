@@ -1,16 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
-import { FilterConfig, MemoryDevice, SortConfig, OfferDevice } from '@/types/memory';
+import { FilterConfig, Device, SortConfig, OfferDevice } from '@/types/memory';
 import { memoryDevices, getDefaultFilters } from '@/data/memory-data';
-import { 
-  filterDevices, 
-  sortDevices, 
-  getMinMaxValues, 
-  getBestPrice, 
-  createOfferDevices,
-  filterOfferDevices,
-  sortOfferDevices
-} from '@/utils/filter-utils';
+import { filterOfferDevices } from '@/utils/filter-utils';
+import { sortOfferDevices } from '@/utils/sort-utils';
+import { createOfferDevices, getBestPrice } from '@/utils/utils';
 import { useToast } from '@/components/ui/use-toast';
 import PageHeader from '@/components/PageHeader';
 import ContentArea from '@/components/ContentArea';
@@ -19,7 +13,7 @@ import PageFooter from '@/components/PageFooter';
 const Index = () => {
   const { toast } = useToast();
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
-  const [devices, setDevices] = useState<MemoryDevice[]>(memoryDevices);
+  const [devices, setDevices] = useState<Device[]>(memoryDevices);
   const [offerDevices, setOfferDevices] = useState<OfferDevice[]>([]);
   const [filteredOfferDevices, setFilteredOfferDevices] = useState<OfferDevice[]>([]);
   const [filters, setFilters] = useState<FilterConfig[]>(getDefaultFilters());
@@ -93,7 +87,7 @@ const Index = () => {
   };
 
   const handleSort = (field: string) => {
-    const typedField = field as keyof MemoryDevice | "price";
+    const typedField = field as keyof Device | "price";
     
     setSortConfig(prev => ({
       field: typedField,

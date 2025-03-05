@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { FilterConfig, MemoryDevice } from '@/types/memory';
+import { FilterConfig, OfferDevice } from '@/types/memory';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import FilterControl from './FilterControl';
@@ -8,7 +8,7 @@ import FilterControl from './FilterControl';
 interface FilterItemProps {
   filter: FilterConfig;
   value: any;
-  devices: MemoryDevice[];
+  devices: OfferDevice[];
   onFilterChange: (field: string, value: any) => void;
   onVisibilityChange: (field: string, visible: boolean) => void;
 }

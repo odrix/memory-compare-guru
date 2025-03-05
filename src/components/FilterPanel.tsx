@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { FilterConfig, MemoryDevice } from '../types/memory';
+import { FilterConfig, OfferDevice } from '../types/memory';
 import { X } from 'lucide-react';
 import DisplaySettings from './filters/DisplaySettings';
 import FilterItem from './filters/FilterItem';
@@ -8,7 +8,7 @@ import FilterItem from './filters/FilterItem';
 interface FilterPanelProps {
   filters: FilterConfig[];
   activeFilters: { [key: string]: any };
-  devices: MemoryDevice[];
+  offerDevices: OfferDevice[];
   onFilterChange: (field: string, value: any) => void;
   onVisibilityChange: (field: string, visible: boolean) => void;
   onResetFilters: () => void;
@@ -21,7 +21,7 @@ interface FilterPanelProps {
 const FilterPanel: React.FC<FilterPanelProps> = ({
   filters,
   activeFilters,
-  devices,
+  offerDevices,
   onFilterChange,
   onVisibilityChange,
   onResetFilters,
@@ -71,7 +71,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
             filter={filter}
             value={activeFilters[filter.field] || 
               (filter.type === 'range' ? { min: filter.min || 0, max: filter.max || 100 } : '')}
-            devices={devices}
+            devices={offerDevices}
             onFilterChange={onFilterChange}
             onVisibilityChange={onVisibilityChange}
           />

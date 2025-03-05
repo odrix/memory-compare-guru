@@ -2,7 +2,7 @@
 import React from 'react';
 import MemoryTable from '@/components/MemoryTable';
 import FilterPanel from '@/components/FilterPanel';
-import { FilterConfig, MemoryDevice, SortConfig, OfferDevice } from '../types/memory';
+import { FilterConfig, SortConfig, OfferDevice } from '../types/memory';
 import FilterToggle from './FilterToggle';
 
 interface ContentAreaProps {
@@ -10,7 +10,6 @@ interface ContentAreaProps {
   toggleFilterPanel: () => void;
   filters: FilterConfig[];
   activeFilters: { [key: string]: any };
-  devices: MemoryDevice[];
   offerDevices: OfferDevice[];
   onFilterChange: (field: string, value: any) => void;
   onVisibilityChange: (field: string, visible: boolean) => void;
@@ -27,7 +26,6 @@ const ContentArea = ({
   toggleFilterPanel,
   filters,
   activeFilters,
-  devices,
   offerDevices,
   onFilterChange,
   onVisibilityChange,

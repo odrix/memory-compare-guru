@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { FilterConfig, MemoryDevice, SortConfig, Offer, OfferDevice } from '../types/memory';
+import { FilterConfig, SortConfig, OfferDevice } from '../types/memory';
 import { ArrowDown, ArrowUp, ExternalLink } from 'lucide-react';
 
 interface MemoryTableProps {
@@ -43,7 +42,7 @@ const MemoryTable = ({
       );
     }
 
-    const value = device[field as keyof MemoryDevice];
+    const value = device[field as keyof OfferDevice];
     if (value === undefined || value === null) return 'N/A';
 
     // Format based on field type
@@ -96,19 +95,6 @@ const MemoryTable = ({
 
   const visibleFilters = getVisibleFilters();
 
-  // Group offerDevices by device id for title display
-  const groupedOfferDevices = offerDevices.reduce((acc, offerDevice) => {
-    const deviceId = offerDevice.device.id;
-    if (!acc[deviceId]) {
-      acc[deviceId] = {
-        device: offerDevice.device,
-        offerDevices: []
-      };
-    }
-    acc[deviceId].offerDevices.push(offerDevice);
-    return acc;
-  }, {} as Record<string, { device: MemoryDevice; offerDevices: OfferDevice[] }>);
-
   return (
     <div className="table-container overflow-x-auto">
       <table className="w-full min-w-[800px] border-collapse">
@@ -136,39 +122,23 @@ const MemoryTable = ({
               </td>
             </tr>
           ) : (
-            Object.values(groupedOfferDevices).map((group, groupIndex) => {
-              const { device, offerDevices } = group;
+            offerDevices.map((offerDevice, index) => {
+              const { device } = offerDevice;
               
               return (
-                <React.Fragment key={device.id}>
-                  {/* Device title row - only show if showOfferTitles is true */}
-                  {showOfferTitles && (
-                    <tr className="bg-muted/30 border-t border-border">
-                      <td colSpan={visibleFilters.length} className="px-4 py-2 text-xs text-muted-foreground">
-                        <div className="flex items-center justify-between">
-                          <span className="font-medium">{device.title} - {offerDevices.length} active offers</span>
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                  
-                  {/* Render a row for each offerDevice */}
-                  {offerDevices.map((offerDevice, offerIndex) => (
-                    <tr
-                      key={`${device.id}-${offerDevice.offer.id}`}
-                      className={`
-                        border-b border-border hover:bg-muted/20 transition-colors
-                        ${(groupIndex + offerIndex) % 2 === 0 ? 'bg-background' : 'bg-muted/10'}
-                      `}
-                    >
-                      {visibleFilters.map((filter) => (
-                        <td key={`${device.id}-${offerDevice.offer.id}-${filter.field}`} className="px-4 py-4 text-sm">
-                          {formatValue(offerDevice, filter.field, filter.unit)}
-                        </td>
-                      ))}
-                    </tr>
+                <tr
+                  key={`${device.id}-${offerDevice.offer.id}`}
+                  className={`
+                    border-b border-border hover:bg-muted/20 transition-colors
+                    ${index % 2 === 0 ? 'bg-background' : 'bg-muted/10'}
+                  `}
+                >
+                  {visibleFilters.map((filter) => (
+                    <td key={`${device.id}-${offerDevice.offer.id}-${filter.field}`} className="px-4 py-4 text-sm">
+                      {formatValue(offerDevice, filter.field, filter.unit)}
+                    </td>
                   ))}
-                </React.Fragment>
+                </tr>
               );
             })
           )}

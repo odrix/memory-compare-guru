@@ -1,7 +1,7 @@
 
-import { MemoryDevice } from '../types/memory';
+import { Device } from '../types/memory';
 
-export const memoryDevices: MemoryDevice[] = [
+export const memoryDevices: Device[] = [
   {
     id: '1',
     title: 'Seagate Barracuda',

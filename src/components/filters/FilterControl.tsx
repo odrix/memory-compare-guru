@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { FilterConfig, MemoryDevice } from '@/types/memory';
+import { FilterConfig, OfferDevice } from '@/types/memory';
 import { Slider } from '@/components/ui/slider';
 import {
   Select,
@@ -17,7 +17,7 @@ import { getUniqueValues } from '@/utils/filter-utils';
 interface FilterControlProps {
   filter: FilterConfig;
   value: any;
-  devices: MemoryDevice[];
+  devices: OfferDevice[];
   onFilterChange: (field: string, value: any) => void;
 }
 
@@ -59,7 +59,7 @@ const FilterControl: React.FC<FilterControlProps> = ({
     case 'select':
       // Get dynamic options if not provided
       const selectOptions = options ||
-        getUniqueValues(devices, field as keyof MemoryDevice)
+        getUniqueValues(devices, field as keyof OfferDevice)
           .map(v => String(v));
 
       return (
