@@ -39,6 +39,11 @@ export interface MemoryDevice {
   ean: string;
 }
 
+export interface OfferDevice {
+  device: MemoryDevice;
+  offer: Offer;
+}
+
 export type FilterConfig = {
   field: keyof MemoryDevice | 'price' | 'euroPerGB' | 'offerUrl';
   label: string;

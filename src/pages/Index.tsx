@@ -1,7 +1,16 @@
+
 import React, { useState, useEffect } from 'react';
-import { FilterConfig, MemoryDevice, SortConfig } from '@/types/memory';
+import { FilterConfig, MemoryDevice, SortConfig, OfferDevice } from '@/types/memory';
 import { memoryDevices, getDefaultFilters } from '@/data/memory-data';
-import { filterDevices, sortDevices, getMinMaxValues, getBestPrice } from '@/utils/filter-utils';
+import { 
+  filterDevices, 
+  sortDevices, 
+  getMinMaxValues, 
+  getBestPrice, 
+  createOfferDevices,
+  filterOfferDevices,
+  sortOfferDevices
+} from '@/utils/filter-utils';
 import { useToast } from '@/components/ui/use-toast';
 import PageHeader from '@/components/PageHeader';
 import ContentArea from '@/components/ContentArea';
@@ -11,7 +20,8 @@ const Index = () => {
   const { toast } = useToast();
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
   const [devices, setDevices] = useState<MemoryDevice[]>(memoryDevices);
-  const [filteredDevices, setFilteredDevices] = useState<MemoryDevice[]>(memoryDevices);
+  const [offerDevices, setOfferDevices] = useState<OfferDevice[]>([]);
+  const [filteredOfferDevices, setFilteredOfferDevices] = useState<OfferDevice[]>([]);
   const [filters, setFilters] = useState<FilterConfig[]>(getDefaultFilters());
   const [activeFilters, setActiveFilters] = useState<{ [key: string]: any }>({});
   const [sortConfig, setSortConfig] = useState<SortConfig>({
@@ -19,6 +29,12 @@ const Index = () => {
     direction: 'desc'
   });
   const [showOfferTitles, setShowOfferTitles] = useState<boolean>(true);
+
+  // Initialize offerDevices from devices
+  useEffect(() => {
+    const newOfferDevices = createOfferDevices(devices);
+    setOfferDevices(newOfferDevices);
+  }, [devices]);
 
   useEffect(() => {
     const prices = devices
@@ -38,7 +54,7 @@ const Index = () => {
   }, [devices]);
 
   useEffect(() => {
-    let result = [...devices];
+    let result = [...offerDevices];
     
     const processedFilters = { ...activeFilters };
     Object.keys(processedFilters).forEach(key => {
@@ -47,11 +63,11 @@ const Index = () => {
       }
     });
     
-    result = filterDevices(result, processedFilters);
-    result = sortDevices(result, sortConfig);
+    result = filterOfferDevices(result, processedFilters);
+    result = sortOfferDevices(result, sortConfig);
     
-    setFilteredDevices(result);
-  }, [devices, activeFilters, sortConfig]);
+    setFilteredOfferDevices(result);
+  }, [offerDevices, activeFilters, sortConfig]);
 
   const handleFilterChange = (field: string, value: any) => {
     setActiveFilters(prev => ({
@@ -114,26 +130,33 @@ const Index = () => {
     });
   };
 
+  // Create a modified ContentArea component to pass offerDevices
+  const renderContentArea = () => {
+    const contentAreaProps = {
+      isFilterPanelOpen,
+      toggleFilterPanel,
+      filters,
+      activeFilters,
+      devices,
+      offerDevices: filteredOfferDevices,
+      onFilterChange: handleFilterChange,
+      onVisibilityChange: handleColumnVisibilityChange,
+      onResetFilters: resetFilters,
+      onClose: () => setIsFilterPanelOpen(false),
+      sortConfig,
+      onSort: handleSort,
+      showOfferTitles,
+      onToggleOfferTitles: handleToggleOfferTitles
+    };
+
+    return <ContentArea {...contentAreaProps} />;
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <PageHeader />
 
-      <ContentArea
-        isFilterPanelOpen={isFilterPanelOpen}
-        toggleFilterPanel={toggleFilterPanel}
-        filters={filters}
-        activeFilters={activeFilters}
-        devices={devices}
-        filteredDevices={filteredDevices}
-        onFilterChange={handleFilterChange}
-        onVisibilityChange={handleColumnVisibilityChange}
-        onResetFilters={resetFilters}
-        onClose={() => setIsFilterPanelOpen(false)}
-        sortConfig={sortConfig}
-        onSort={handleSort}
-        showOfferTitles={showOfferTitles}
-        onToggleOfferTitles={handleToggleOfferTitles}
-      />
+      {renderContentArea()}
 
       <PageFooter />
     </div>

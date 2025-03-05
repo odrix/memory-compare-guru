@@ -1,10 +1,10 @@
 
 import React from 'react';
-import { FilterConfig, MemoryDevice, SortConfig, Offer } from '../types/memory';
+import { FilterConfig, MemoryDevice, SortConfig, Offer, OfferDevice } from '../types/memory';
 import { ArrowDown, ArrowUp, ExternalLink } from 'lucide-react';
 
 interface MemoryTableProps {
-  devices: MemoryDevice[];
+  offerDevices: OfferDevice[];
   filters: FilterConfig[];
   sortConfig: SortConfig;
   onSort: (field: string) => void;
@@ -12,23 +12,25 @@ interface MemoryTableProps {
 }
 
 const MemoryTable = ({ 
-  devices, 
+  offerDevices, 
   filters, 
   sortConfig, 
   onSort,
   showOfferTitles 
 }: MemoryTableProps) => {
-  const formatValue = (device: MemoryDevice, field: string, unit?: string, offer?: Offer) => {
-    if (field === 'price' && offer) {
+  const formatValue = (offerDevice: OfferDevice, field: string, unit?: string) => {
+    const { device, offer } = offerDevice;
+    
+    if (field === 'price') {
       return `${offer.price.toFixed(2)}${offer.currency === 'EUR' ? '€' : '$'}`;
     }
 
-    if (field === 'euroPerGB' && offer) {
+    if (field === 'euroPerGB') {
       if (!device.capacityGB) return 'N/A';
       return `${(offer.price / device.capacityGB).toFixed(2)} €/GB`;
     }
 
-    if (field === 'offerUrl' && offer) {
+    if (field === 'offerUrl') {
       return (
         <a
           href={offer.url}
@@ -63,10 +65,6 @@ const MemoryTable = ({
       : <ArrowDown className="inline ml-1 w-4 h-4" />;
   };
 
-  const getActiveOffers = (device: MemoryDevice): Offer[] => {
-    return device.offers.filter(offer => !offer.inactive);
-  };
-
   // Desired column order: Capacité (GB), Prix, Euro/GB, Marque, Technologie, Vitesse lecture, Vitesse écriture, RPM, Cache, Format, Type, Interface, Poids, Garantie, Évaluation
   const columnOrder = [
     'capacityGB', 'price', 'euroPerGB', 'brand', 'technology', 'readSpeed', 'writeSpeed', 'rpm',
@@ -98,6 +96,19 @@ const MemoryTable = ({
 
   const visibleFilters = getVisibleFilters();
 
+  // Group offerDevices by device id for title display
+  const groupedOfferDevices = offerDevices.reduce((acc, offerDevice) => {
+    const deviceId = offerDevice.device.id;
+    if (!acc[deviceId]) {
+      acc[deviceId] = {
+        device: offerDevice.device,
+        offerDevices: []
+      };
+    }
+    acc[deviceId].offerDevices.push(offerDevice);
+    return acc;
+  }, {} as Record<string, { device: MemoryDevice; offerDevices: OfferDevice[] }>);
+
   return (
     <div className="table-container overflow-x-auto">
       <table className="w-full min-w-[800px] border-collapse">
@@ -118,63 +129,41 @@ const MemoryTable = ({
           </tr>
         </thead>
         <tbody>
-          {devices.length === 0 ? (
+          {offerDevices.length === 0 ? (
             <tr>
               <td colSpan={visibleFilters.length} className="px-4 py-8 text-center text-muted-foreground">
                 No devices match your filters
               </td>
             </tr>
           ) : (
-            devices.flatMap((device, deviceIndex) => {
-              const activeOffers = getActiveOffers(device);
+            Object.values(groupedOfferDevices).map((group, groupIndex) => {
+              const { device, offerDevices } = group;
               
-              if (activeOffers.length === 0) {
-                // Render a single row for devices with no active offers
-                return (
-                  <tr 
-                    key={device.id} 
-                    className={`
-                      border-b border-border hover:bg-muted/20 transition-colors
-                      ${deviceIndex % 2 === 0 ? 'bg-background' : 'bg-muted/10'}
-                    `}
-                  >
-                    {visibleFilters.map((filter) => (
-                      <td key={`${device.id}-${filter.field}`} className="px-4 py-4 text-sm">
-                        {formatValue(device, filter.field, filter.unit)}
-                      </td>
-                    ))}
-                  </tr>
-                );
-              }
-              
-              // Render a group with a row for each active offer
               return (
                 <React.Fragment key={device.id}>
-                  {/* Offer title row - only show if showOfferTitles is true */}
+                  {/* Device title row - only show if showOfferTitles is true */}
                   {showOfferTitles && (
                     <tr className="bg-muted/30 border-t border-border">
                       <td colSpan={visibleFilters.length} className="px-4 py-2 text-xs text-muted-foreground">
                         <div className="flex items-center justify-between">
-                          <span className="font-medium">{device.title} - {activeOffers.length} active offers</span>
+                          <span className="font-medium">{device.title} - {offerDevices.length} active offers</span>
                         </div>
                       </td>
                     </tr>
                   )}
                   
-                  {/* Render a row for each offer */}
-                  {activeOffers.map((offer, offerIndex) => (
+                  {/* Render a row for each offerDevice */}
+                  {offerDevices.map((offerDevice, offerIndex) => (
                     <tr
-                      key={`${device.id}-${offer.id}`}
+                      key={`${device.id}-${offerDevice.offer.id}`}
                       className={`
                         border-b border-border hover:bg-muted/20 transition-colors
-                        ${(deviceIndex + offerIndex) % 2 === 0 ? 'bg-background' : 'bg-muted/10'}
+                        ${(groupIndex + offerIndex) % 2 === 0 ? 'bg-background' : 'bg-muted/10'}
                       `}
                     >
                       {visibleFilters.map((filter) => (
-                        <td key={`${device.id}-${offer.id}-${filter.field}`} className="px-4 py-4 text-sm">
-                          {['price', 'euroPerGB', 'offerUrl'].includes(filter.field)
-                            ? formatValue(device, filter.field, filter.unit, offer)
-                            : formatValue(device, filter.field, filter.unit)}
+                        <td key={`${device.id}-${offerDevice.offer.id}-${filter.field}`} className="px-4 py-4 text-sm">
+                          {formatValue(offerDevice, filter.field, filter.unit)}
                         </td>
                       ))}
                     </tr>
