@@ -1,6 +1,18 @@
 
 import { OfferDevice } from "../types/memory";
 
+export const getUniqueValues = (devices: OfferDevice[], field: keyof OfferDevice) => {
+  const values = devices.map(device => {
+    if (field in device.device) {
+      return device.device[field as keyof typeof device.device];
+    } else if (field in device.offer) {
+      return device.offer[field as keyof typeof device.offer];
+    }
+    return null;
+  });
+  return [...new Set(values)].filter(Boolean);
+};
+
 const applyFilters = (item: OfferDevice, filters: { [key: string]: any }) => {
     // For each device, check if it passes all the filters
     for (const [key, value] of Object.entries(filters)) {

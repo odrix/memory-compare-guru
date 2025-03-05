@@ -1,3 +1,4 @@
+
 import { OfferDevice, SortConfig } from "../types/memory";
 
 const applySorting = (a: any, b: any, sortConfig: SortConfig) => {
@@ -23,16 +24,28 @@ const applySorting = (a: any, b: any, sortConfig: SortConfig) => {
     
     return sortedOfferDevices.sort((a, b) => {
       if (sortConfig.field === 'price') {
-        const valueA = a.price;
-        const valueB = b.price;
+        const valueA = a.offer.price;
+        const valueB = b.offer.price;
         return sortConfig.direction === 'asc' ? valueA - valueB : valueB - valueA;
       } else if (sortConfig.field === 'euroPerGB') {
-        const valueA = a.price / (a.capacityGB || 1);
-        const valueB = b.price / (b.capacityGB || 1);
+        const valueA = a.offer.euroPerGB || 0;
+        const valueB = b.offer.euroPerGB || 0;
         return sortConfig.direction === 'asc' ? valueA - valueB : valueB - valueA;
       } else {
-        return applySorting(a, b, sortConfig);
+        // Compare device properties
+        const fieldName = sortConfig.field as keyof typeof a.device;
+        const valueA = a.device[fieldName];
+        const valueB = b.device[fieldName];
+
+        if (typeof valueA === 'string' && typeof valueB === 'string') {
+          return sortConfig.direction === 'asc'
+            ? valueA.localeCompare(valueB)
+            : valueB.localeCompare(valueA);
+        }
+
+        return sortConfig.direction === 'asc'
+          ? (valueA as number) - (valueB as number)
+          : (valueB as number) - (valueA as number);
       }
     });
   };
-  

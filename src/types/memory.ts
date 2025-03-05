@@ -1,5 +1,6 @@
-export { Offer } from './Offer';
-export { Device } from './Device';
-export { OfferDevice } from './OfferDevice';
-export { FilterConfig } from './FilterConfig';
-export { SortConfig } from './SortConfig';
+
+export type { Offer } from './Offer';
+export type { Device } from './Device';
+export type { OfferDevice } from './OfferDevice';
+export type { FilterConfig } from './FilterConfig';
+export type { SortConfig } from './SortConfig';

@@ -87,7 +87,7 @@ const Index = () => {
   };
 
   const handleSort = (field: string) => {
-    const typedField = field as keyof Device | "price";
+    const typedField = field as keyof Device | "price" | "euroPerGB" | "offerUrl";
     
     setSortConfig(prev => ({
       field: typedField,
@@ -131,7 +131,6 @@ const Index = () => {
       toggleFilterPanel,
       filters,
       activeFilters,
-      devices,
       offerDevices: filteredOfferDevices,
       onFilterChange: handleFilterChange,
       onVisibilityChange: handleColumnVisibilityChange,

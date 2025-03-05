@@ -48,7 +48,7 @@ const ContentArea = ({
           <FilterPanel
             filters={filters}
             activeFilters={activeFilters}
-            devices={devices}
+            offerDevices={offerDevices}
             onFilterChange={onFilterChange}
             onVisibilityChange={onVisibilityChange}
             onResetFilters={onResetFilters}
