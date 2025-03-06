@@ -2,6 +2,7 @@
 import React from 'react';
 import { FilterConfig, SortConfig, OfferDevice } from '../types/memory';
 import { ArrowDown, ArrowUp, ExternalLink } from 'lucide-react';
+import { Button } from './ui/button';
 
 interface MemoryTableProps {
   offerDevices: OfferDevice[];
@@ -139,19 +140,26 @@ const MemoryTable = ({
                 <React.Fragment key={`${device.id}-${offer.id}`}>
                   {showOfferTitles && (
                     <tr className="bg-muted/5 border-t border-border">
-                      <td colSpan={visibleFilters.length} className="px-4 py-2 relative">
+                      <td colSpan={visibleFilters.length} className="px-1 py-1 relative">
                         <div className="flex justify-between items-center">
-                          <span className="text-sm font-medium sticky left-0 bg-muted/5 pl-4 pr-4 py-2 z-10">
+                          <span className="text-xs font-medium uppercase sticky left-0 bg-muted/5 pl-1 pr-2 py-1 z-10">
                             {deviceTitle}
                           </span>
-                          <a
-                            href={offer.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center text-primary hover:underline text-xs sticky right-0 bg-muted/5 pl-4 pr-4 py-2 z-10"
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            className="text-xs sticky right-0 bg-muted/5 py-1 z-10"
+                            asChild
                           >
-                            {offer.store || 'Visit store'} <ExternalLink className="ml-1 w-3 h-3" />
-                          </a>
+                            <a
+                              href={offer.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-1"
+                            >
+                              Voir l'offre <ExternalLink className="w-3 h-3" />
+                            </a>
+                          </Button>
                         </div>
                       </td>
                     </tr>
