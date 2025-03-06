@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { FilterConfig, SortConfig, OfferDevice } from '../types/memory';
 import { ArrowDown, ArrowUp, ExternalLink } from 'lucide-react';
@@ -63,6 +62,11 @@ const MemoryTable = ({
     return sortConfig.direction === 'asc'
       ? <ArrowUp className="inline ml-1 w-4 h-4" />
       : <ArrowDown className="inline ml-1 w-4 h-4" />;
+  };
+
+  const getDeviceTitle = (offerDevice: OfferDevice) => {
+    const { device, offer } = offerDevice;
+    return `${device.brand} ${device.capacityGB}GB - ${offer.store || 'Store'}`;
   };
 
   // Desired column order: Capacité (GB), Prix, Euro/GB, Marque, Technologie, Vitesse lecture, Vitesse écriture, RPM, Cache, Format, Type, Interface, Poids, Garantie, Évaluation
@@ -136,22 +140,39 @@ const MemoryTable = ({
             </tr>
           ) : (
             offerDevices.map((offerDevice, index) => {
-              const { device } = offerDevice;
+              const { device, offer } = offerDevice;
+              const deviceTitle = getDeviceTitle(offerDevice);
               
               return (
-                <tr
-                  key={`${device.id}-${offerDevice.offer.id}`}
-                  className={`
-                    border-b border-border hover:bg-muted/20 transition-colors
-                    ${index % 2 === 0 ? 'bg-background' : 'bg-muted/10'}
-                  `}
-                >
-                  {visibleFilters.map((filter) => (
-                    <td key={`${device.id}-${offerDevice.offer.id}-${filter.field}`} className="px-4 py-4 text-sm">
-                      {formatValue(offerDevice, filter.field, filter.unit)}
+                <React.Fragment key={`${device.id}-${offer.id}`}>
+                  <tr className="bg-muted/5 border-t border-border">
+                    <td colSpan={visibleFilters.length} className="px-4 py-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-medium">{deviceTitle}</span>
+                        <a
+                          href={offer.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center text-primary hover:underline text-xs"
+                        >
+                          {offer.store || 'Visit store'} <ExternalLink className="ml-1 w-3 h-3" />
+                        </a>
+                      </div>
                     </td>
-                  ))}
-                </tr>
+                  </tr>
+                  <tr
+                    className={`
+                      border-b border-border hover:bg-muted/20 transition-colors
+                      ${index % 2 === 0 ? 'bg-background' : 'bg-muted/10'}
+                    `}
+                  >
+                    {visibleFilters.map((filter) => (
+                      <td key={`${device.id}-${offer.id}-${filter.field}`} className="px-4 py-4 text-sm">
+                        {formatValue(offerDevice, filter.field, filter.unit)}
+                      </td>
+                    ))}
+                  </tr>
+                </React.Fragment>
               );
             })
           )}
