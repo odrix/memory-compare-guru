@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { FilterConfig, SortConfig, OfferDevice } from '../types/memory';
 import { ArrowDown, ArrowUp, ExternalLink } from 'lucide-react';
@@ -85,26 +86,17 @@ const MemoryTable = ({
         return indexA - indexB;
       });
 
-    // Always add title column if offer titles should be shown
-    if (showOfferTitles) {
-      // Add title at the beginning
-      visFilters.unshift({
-        field: 'title',
-        label: 'Titre',
-        type: 'text',
-        isVisible: true
-      });
-    }
-
-    // Add URL column if it's not already there (it might be added as a regular filter)
-    const hasUrlColumn = visFilters.some(f => f.field === 'offerUrl');
-    if (!hasUrlColumn) {
-      visFilters.push({
-        field: 'offerUrl',
-        label: 'URL',
-        type: 'text',
-        isVisible: true
-      });
+    // Add URL column if it's not already there and titles are not shown
+    if (!showOfferTitles) {
+      const hasUrlColumn = visFilters.some(f => f.field === 'offerUrl');
+      if (!hasUrlColumn) {
+        visFilters.push({
+          field: 'offerUrl',
+          label: 'URL',
+          type: 'text',
+          isVisible: true
+        });
+      }
     }
 
     return visFilters;
@@ -145,25 +137,28 @@ const MemoryTable = ({
               
               return (
                 <React.Fragment key={`${device.id}-${offer.id}`}>
-                  <tr className="bg-muted/5 border-t border-border">
-                    <td colSpan={visibleFilters.length} className="px-4 py-2">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium">{deviceTitle}</span>
-                        <a
-                          href={offer.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center text-primary hover:underline text-xs"
-                        >
-                          {offer.store || 'Visit store'} <ExternalLink className="ml-1 w-3 h-3" />
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
+                  {showOfferTitles && (
+                    <tr className="bg-muted/5 border-t border-border">
+                      <td colSpan={visibleFilters.length} className="px-4 py-2">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm font-medium">{deviceTitle}</span>
+                          <a
+                            href={offer.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center text-primary hover:underline text-xs"
+                          >
+                            {offer.store || 'Visit store'} <ExternalLink className="ml-1 w-3 h-3" />
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
                   <tr
                     className={`
                       border-b border-border hover:bg-muted/20 transition-colors
                       ${index % 2 === 0 ? 'bg-background' : 'bg-muted/10'}
+                      ${!showOfferTitles ? 'border-t border-border' : ''}
                     `}
                   >
                     {visibleFilters.map((filter) => (
