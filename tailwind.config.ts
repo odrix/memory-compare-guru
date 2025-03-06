@@ -22,6 +22,9 @@ export default {
 				sans: ['Inter', 'system-ui', 'sans-serif'],
 				mono: ['JetBrains Mono', 'monospace'],
 			},
+			fontSize: {
+				'xxs': '0.625rem', // Define the size for text-xxs
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
