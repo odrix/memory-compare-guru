@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { FilterConfig, SortConfig, OfferDevice } from '../types/memory';
 import { ArrowDown, ArrowUp, ExternalLink } from 'lucide-react';
@@ -137,13 +138,13 @@ const MemoryTable = ({
                     <tr className="bg-muted/5 border-t border-border">
                       <td colSpan={visibleFilters.length} className="px-1 pt-1 relative">
                         <div className="flex justify-between items-center">
-                          <span className="text-xxs text-muted-foreground font-medium uppercase sticky left-0 bg-muted/5 pr-2 py-1 z-10">
+                          <span className="text-xs text-muted-foreground font-medium uppercase sticky left-0 bg-muted/5 pr-2 py-1 z-10">
                             {deviceTitle}
                           </span>
                           <Button 
                             size="sm" 
                             variant="outline"
-                            className="text-xs sticky right-0 bg-muted/5 py-1 z-10 text-blue-500 hover:text-blue-700" // Add color classes here
+                            className="text-xs sticky right-0 bg-muted/5 py-1 z-10"
                             asChild
                           >
                             <a
