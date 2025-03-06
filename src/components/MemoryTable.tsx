@@ -106,7 +106,7 @@ const MemoryTable = ({
 
   return (
     <div className="table-container overflow-x-auto">
-      <table className="w-full min-w-[800px] border-collapse">
+      <table className="w-full min-w-[800px] border-collapse relative">
         <thead>
           <tr className="bg-muted/50">
             {visibleFilters.map((filter) => (
@@ -139,14 +139,16 @@ const MemoryTable = ({
                 <React.Fragment key={`${device.id}-${offer.id}`}>
                   {showOfferTitles && (
                     <tr className="bg-muted/5 border-t border-border">
-                      <td colSpan={visibleFilters.length} className="px-4 py-2">
+                      <td colSpan={visibleFilters.length} className="px-4 py-2 relative">
                         <div className="flex justify-between items-center">
-                          <span className="text-sm font-medium">{deviceTitle}</span>
+                          <span className="text-sm font-medium sticky left-0 bg-muted/5 pl-4 pr-4 py-2 z-10">
+                            {deviceTitle}
+                          </span>
                           <a
                             href={offer.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center text-primary hover:underline text-xs"
+                            className="flex items-center text-primary hover:underline text-xs sticky right-0 bg-muted/5 pl-4 pr-4 py-2 z-10"
                           >
                             {offer.store || 'Visit store'} <ExternalLink className="ml-1 w-3 h-3" />
                           </a>
