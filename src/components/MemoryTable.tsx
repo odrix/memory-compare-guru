@@ -3,6 +3,7 @@ import React from 'react';
 import { FilterConfig, SortConfig, OfferDevice } from '../types/memory';
 import { ArrowDown, ArrowUp, ExternalLink } from 'lucide-react';
 import { Button } from './ui/button';
+import { getDeviceTitle } from '../utils/utils';
 
 interface MemoryTableProps {
   offerDevices: OfferDevice[];
@@ -64,11 +65,6 @@ const MemoryTable = ({
     return sortConfig.direction === 'asc'
       ? <ArrowUp className="inline ml-1 w-4 h-4" />
       : <ArrowDown className="inline ml-1 w-4 h-4" />;
-  };
-
-  const getDeviceTitle = (offerDevice: OfferDevice) => {
-    const { device, offer } = offerDevice;
-    return `${device.brand} ${device.capacityGB}GB - ${offer.store || 'Store'}`;
   };
 
   // Desired column order: Capacité (GB), Prix, Euro/GB, Marque, Technologie, Vitesse lecture, Vitesse écriture, RPM, Cache, Format, Type, Interface, Poids, Garantie, Évaluation
@@ -140,9 +136,9 @@ const MemoryTable = ({
                 <React.Fragment key={`${device.id}-${offer.id}`}>
                   {showOfferTitles && (
                     <tr className="bg-muted/5 border-t border-border">
-                      <td colSpan={visibleFilters.length} className="px-1 py-1 relative">
+                      <td colSpan={visibleFilters.length} className="px-1 pt-1 relative">
                         <div className="flex justify-between items-center">
-                          <span className="text-xs font-medium uppercase sticky left-0 bg-muted/5 pl-1 pr-2 py-1 z-10">
+                          <span className="text-xs text-muted-foreground font-medium uppercase sticky left-0 bg-muted/5 pr-2 py-1 z-10">
                             {deviceTitle}
                           </span>
                           <Button 
@@ -157,7 +153,7 @@ const MemoryTable = ({
                               rel="noopener noreferrer"
                               className="flex items-center gap-1"
                             >
-                              Voir l'offre <ExternalLink className="w-3 h-3" />
+                              Voir l'offre
                             </a>
                           </Button>
                         </div>

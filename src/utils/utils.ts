@@ -47,6 +47,11 @@ export const getAllActivePrices = (device: Device) => {
     .map(offer => offer.price);
 };
 
+export const getDeviceTitle = (offerDevice: OfferDevice) => {
+  const { device, offer } = offerDevice;
+  return `${device.model || device.title} - ${offer.store || 'Store'}`;
+};
+
 export const getActiveOffers = (device: Device): Offer[] => {
   if (!device.offers || device.offers.length === 0) return [];
   return device.offers.filter(offer => !offer.inactive);

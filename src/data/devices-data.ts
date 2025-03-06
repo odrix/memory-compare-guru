@@ -1,4 +1,3 @@
-
 import { Device } from '../types/memory';
 
 export const memoryDevices: Device[] = [
@@ -46,6 +45,17 @@ export const memoryDevices: Device[] = [
         inactive: false,
         createdDateUTC: '2023-01-20T14:45:00Z',
         lastCheckedDateUTC: '2023-06-18T16:30:00Z'
+      },
+      { 
+        id: 'o17', 
+        price: 54.99, 
+        currency: 'USD', 
+        countryCode: 'US', 
+        store: 'Best Buy', 
+        url: 'https://www.bestbuy.com/site/seagate-barracuda-2tb-internal-sata-hard-drive/6221571.p',
+        inactive: false,
+        createdDateUTC: '2023-07-01T10:00:00Z',
+        lastCheckedDateUTC: '2023-07-10T10:00:00Z'
       }
     ],
     isVisible: true
@@ -93,6 +103,17 @@ export const memoryDevices: Device[] = [
         inactive: false,
         createdDateUTC: '2023-02-10T13:30:00Z',
         lastCheckedDateUTC: '2023-06-17T14:45:00Z'
+      },
+      { 
+        id: 'o18', 
+        price: 124.99, 
+        currency: 'USD', 
+        countryCode: 'US', 
+        store: 'Newegg', 
+        url: 'https://www.newegg.com/samsung-970-evo-plus-1tb/p/N82E16820147692',
+        inactive: false,
+        createdDateUTC: '2023-07-01T10:00:00Z',
+        lastCheckedDateUTC: '2023-07-10T10:00:00Z'
       }
     ],
     isVisible: true
@@ -140,6 +161,17 @@ export const memoryDevices: Device[] = [
         inactive: false,
         createdDateUTC: '2023-01-28T11:20:00Z',
         lastCheckedDateUTC: '2023-06-16T09:30:00Z'
+      },
+      { 
+        id: 'o19', 
+        price: 62.99, 
+        currency: 'USD', 
+        countryCode: 'US', 
+        store: 'Best Buy', 
+        url: 'https://www.bestbuy.com/site/wd-blue-500gb-internal-sata-solid-state-drive/6221571.p',
+        inactive: false,
+        createdDateUTC: '2023-07-01T10:00:00Z',
+        lastCheckedDateUTC: '2023-07-10T10:00:00Z'
       }
     ],
     isVisible: true
@@ -188,6 +220,17 @@ export const memoryDevices: Device[] = [
         inactivedDateUTC: '2023-06-01T12:00:00Z',
         createdDateUTC: '2023-02-18T13:50:00Z',
         lastCheckedDateUTC: '2023-06-01T12:00:00Z'
+      },
+      { 
+        id: 'o20', 
+        price: 89.99, 
+        currency: 'USD', 
+        countryCode: 'US', 
+        store: 'Newegg', 
+        url: 'https://www.newegg.com/crucial-mx500-1tb/p/N82E16820156173',
+        inactive: false,
+        createdDateUTC: '2023-07-01T10:00:00Z',
+        lastCheckedDateUTC: '2023-07-10T10:00:00Z'
       }
     ],
     isVisible: true
@@ -235,6 +278,17 @@ export const memoryDevices: Device[] = [
         inactive: false,
         createdDateUTC: '2023-03-15T10:20:00Z',
         lastCheckedDateUTC: '2023-06-19T14:40:00Z'
+      },
+      { 
+        id: 'o21', 
+        price: 72.99, 
+        currency: 'USD', 
+        countryCode: 'US', 
+        store: 'Best Buy', 
+        url: 'https://www.bestbuy.com/site/kingston-a2000-500gb-internal-nvme-solid-state-drive/6221571.p',
+        inactive: false,
+        createdDateUTC: '2023-07-01T10:00:00Z',
+        lastCheckedDateUTC: '2023-07-10T10:00:00Z'
       }
     ],
     isVisible: true
@@ -283,6 +337,17 @@ export const memoryDevices: Device[] = [
         inactive: false,
         createdDateUTC: '2023-03-25T12:40:00Z',
         lastCheckedDateUTC: '2023-06-18T11:30:00Z'
+      },
+      { 
+        id: 'o22', 
+        price: 154.99, 
+        currency: 'USD', 
+        countryCode: 'US', 
+        store: 'Newegg', 
+        url: 'https://www.newegg.com/wd-black-4tb-performance-hard-drive/p/N82E16822235012',
+        inactive: false,
+        createdDateUTC: '2023-07-01T10:00:00Z',
+        lastCheckedDateUTC: '2023-07-10T10:00:00Z'
       }
     ],
     isVisible: true
@@ -329,6 +394,17 @@ export const memoryDevices: Device[] = [
         inactive: false,
         createdDateUTC: '2023-04-10T11:05:00Z',
         lastCheckedDateUTC: '2023-06-17T13:25:00Z'
+      },
+      { 
+        id: 'o23', 
+        price: 184.99, 
+        currency: 'USD', 
+        countryCode: 'US', 
+        store: 'Newegg', 
+        url: 'https://www.newegg.com/sandisk-extreme-pro-1tb-portable-ssd/p/N82E16820173312',
+        inactive: false,
+        createdDateUTC: '2023-07-01T10:00:00Z',
+        lastCheckedDateUTC: '2023-07-10T10:00:00Z'
       }
     ],
     isVisible: true
@@ -377,6 +453,17 @@ export const memoryDevices: Device[] = [
         inactivedDateUTC: '2023-05-15T09:00:00Z',
         createdDateUTC: '2023-04-20T10:30:00Z',
         lastCheckedDateUTC: '2023-05-15T09:00:00Z'
+      },
+      { 
+        id: 'o24', 
+        price: 224.99, 
+        currency: 'USD', 
+        countryCode: 'US', 
+        store: 'Newegg', 
+        url: 'https://www.newegg.com/crucial-p5-plus-2tb/p/N82E16820156174',
+        inactive: false,
+        createdDateUTC: '2023-07-01T10:00:00Z',
+        lastCheckedDateUTC: '2023-07-10T10:00:00Z'
       }
     ],
     isVisible: true
