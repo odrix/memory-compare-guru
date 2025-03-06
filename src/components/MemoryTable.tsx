@@ -81,8 +81,20 @@ const MemoryTable = ({
         return indexA - indexB;
       });
 
-    // Add URL column if offer titles are not shown
-    if (!showOfferTitles) {
+    // Always add title column if offer titles should be shown
+    if (showOfferTitles) {
+      // Add title at the beginning
+      visFilters.unshift({
+        field: 'title',
+        label: 'Titre',
+        type: 'text',
+        isVisible: true
+      });
+    }
+
+    // Add URL column if it's not already there (it might be added as a regular filter)
+    const hasUrlColumn = visFilters.some(f => f.field === 'offerUrl');
+    if (!hasUrlColumn) {
       visFilters.push({
         field: 'offerUrl',
         label: 'URL',
