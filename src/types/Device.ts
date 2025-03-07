@@ -6,7 +6,7 @@ export interface Device {
   subtitle?: string;
   brand: string;
   model: string;
-  type: 'HDD' | 'SSD' | 'NVMe' | 'USB' | 'SD' | 'microSD' | 'other';
+  type: 'SATA' | 'HDD' | 'SSD' | 'NVMe' | 'USB' | 'SD' | 'microSD' | 'other';
   technology: string;
   capacityGB: number;
   capacityTB?: number;
