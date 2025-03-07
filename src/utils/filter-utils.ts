@@ -26,6 +26,15 @@ const applyFilters = (item: OfferDevice, filters: { [key: string]: any }) => {
           if (value.min && fieldValue < value.min) return false;
           if (value.max && fieldValue > value.max) return false;
         }
+      } else if (key === 'euroPerTB') {
+        // Convert euroPerGB to euroPerTB for filtering
+        const fieldValue = item.offer.euroPerGB ? item.offer.euroPerGB * 1024 : undefined;
+        
+        if (typeof value === 'object' && 'min' in value && 'max' in value) {
+          if (typeof fieldValue !== 'number') continue;
+          if (value.min && fieldValue < value.min) return false;
+          if (value.max && fieldValue > value.max) return false;
+        }
       } else if (key === 'price') {
         const fieldValue = item.offer.price;
         

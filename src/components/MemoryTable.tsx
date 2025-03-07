@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { FilterConfig, SortConfig, OfferDevice } from '../types/memory';
 import { ArrowDown, ArrowUp, ExternalLink } from 'lucide-react';
@@ -31,6 +32,13 @@ const MemoryTable = ({
       return `${offer.euroPerGB.toFixed(3)} €/GB`;
     }
 
+    if (field === 'euroPerTB') {
+      if (!offer.euroPerGB) return 'N/A';
+      // Convert €/GB to €/TB (multiply by 1024)
+      const euroPerTB = offer.euroPerGB * 1024;
+      return `${euroPerTB.toFixed(2)} €/TB`;
+    }
+
     if (field === 'offerUrl') {
       return (
         <a
@@ -40,6 +48,26 @@ const MemoryTable = ({
           className="flex items-center text-primary hover:underline text-xs"
         >
           {offer.store || 'Visit store'} <ExternalLink className="ml-1 w-3 h-3" />
+        </a>
+      );
+    }
+
+    if (field === 'affiliateLink') {
+      const deviceTitle = device.title || '';
+      const deviceSubtitle = device.subtitle || '';
+      const storeName = offer.store || 'Voir l\'offre';
+      
+      return (
+        <a
+          href={offer.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center text-primary hover:underline text-xs"
+        >
+          <span className="truncate mr-1">
+            {deviceTitle}{deviceSubtitle ? ` - ${deviceSubtitle}` : ''} - {storeName}
+          </span>
+          <ExternalLink className="ml-1 w-3 h-3 flex-shrink-0" />
         </a>
       );
     }
@@ -66,10 +94,10 @@ const MemoryTable = ({
       : <ArrowDown className="inline ml-1 w-4 h-4" />;
   };
 
-  // Desired column order: Capacité (GB), Prix, Euro/GB, Marque, Technologie, Vitesse lecture, Vitesse écriture, RPM, Cache, Format, Type, Interface, Poids, Garantie, Évaluation
+  // Desired column order: Capacité (GB), Prix, Euro/GB, Euro/TB, Marque, Technologie, Vitesse lecture, Vitesse écriture, RPM, Cache, Format, Type, Interface, Poids, Garantie, Évaluation, Lien affilié
   const columnOrder = [
-    'capacityGB', 'price', 'euroPerGB', 'brand', 'technology', 'readSpeed', 'writeSpeed', 'rpm',
-    'cache', 'format', 'type', 'interface', 'weight', 'warranty', 'rating'
+    'capacityGB', 'price', 'euroPerGB', 'euroPerTB', 'brand', 'technology', 'readSpeed', 'writeSpeed', 'rpm',
+    'cache', 'format', 'type', 'interface', 'weight', 'warranty', 'rating', 'affiliateLink'
   ];
 
   // Get visible filters and sort them according to the column order
@@ -93,6 +121,17 @@ const MemoryTable = ({
           isVisible: true
         });
       }
+    }
+
+    // Always add affiliate link column at the end
+    const hasAffiliateColumn = visFilters.some(f => f.field === 'affiliateLink');
+    if (!hasAffiliateColumn) {
+      visFilters.push({
+        field: 'affiliateLink',
+        label: 'Lien affilié',
+        type: 'text',
+        isVisible: true
+      });
     }
 
     return visFilters;
@@ -143,7 +182,7 @@ const MemoryTable = ({
                           <Button 
                             size="sm" 
                             variant="outline"
-                            className="text-xs sticky right-0 bg-muted/5 py-1 z-10 text-blue-500 hover:text-blue-700" // Add color classes here
+                            className="text-xs sticky right-0 bg-muted/5 py-1 z-10 text-blue-500 hover:text-blue-700"
                             asChild
                           >
                             <a

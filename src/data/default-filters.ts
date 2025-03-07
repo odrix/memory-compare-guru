@@ -33,6 +33,16 @@ export const getDefaultFilters = (): FilterConfig[] => [
     isVisible: true,
   },
   {
+    field: 'euroPerTB',
+    label: 'Euro/TB',
+    type: 'range',
+    min: 0,
+    max: 2000,
+    step: 1,
+    unit: '€/TB',
+    isVisible: true,
+  },
+  {
     field: 'brand',
     label: 'Marque',
     type: 'select',
