@@ -32,8 +32,12 @@ const TableCell = ({ offerDevice, field, unit }: TableCellProps) => {
     // Convert GB to TB (divide by 1024)
     const capacityTB = device.capacityGB / 1024;
     if(capacityTB.toFixed(2).toString().endsWith('.00')) 
-      return <>{capacityTB.toFixed(0)}</>;
-    return <>{capacityTB.toFixed(2)}</>;
+      return <>{capacityTB.toFixed(0)} To</>;
+    return <>{capacityTB.toFixed(2)} To</>;
+  }
+
+  if (field === 'capacityGB') {
+    return <>{device.capacityGB.toFixed(0)} Go</>;
   }
 
   if (field === 'readSpeed' || field === 'writeSpeed' || field === 'cache') {
