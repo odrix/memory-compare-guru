@@ -35,6 +35,15 @@ const applyFilters = (item: OfferDevice, filters: { [key: string]: any }) => {
           if (value.min && fieldValue < value.min) return false;
           if (value.max && fieldValue > value.max) return false;
         }
+      } else if (key === 'capacityTB') {
+        // Convert capacityGB to capacityTB for filtering
+        const fieldValue = item.device.capacityGB / 1024;
+        
+        if (typeof value === 'object' && 'min' in value && 'max' in value) {
+          if (typeof fieldValue !== 'number') continue;
+          if (value.min && fieldValue < value.min) return false;
+          if (value.max && fieldValue > value.max) return false;
+        }
       } else if (key === 'price') {
         const fieldValue = item.offer.price;
         

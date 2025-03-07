@@ -1,4 +1,3 @@
-
 import { FilterConfig } from '../types/memory';
 
 export const getDefaultFilters = (): FilterConfig[] => [
@@ -10,6 +9,16 @@ export const getDefaultFilters = (): FilterConfig[] => [
     max: 4000,
     step: 10,
     unit: 'GB',
+    isVisible: true,
+  },
+  {
+    field: 'capacityTB',
+    label: 'Capacité (TB)',
+    type: 'range',
+    min: 0,
+    max: 4,
+    step: 0.01,
+    unit: 'TB',
     isVisible: true,
   },
   {

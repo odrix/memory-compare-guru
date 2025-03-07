@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { FilterConfig, SortConfig, OfferDevice } from '../types/memory';
 import { ArrowDown, ArrowUp, ExternalLink } from 'lucide-react';
@@ -37,6 +36,12 @@ const MemoryTable = ({
       // Convert €/GB to €/TB (multiply by 1024)
       const euroPerTB = offer.euroPerGB * 1024;
       return `${euroPerTB.toFixed(2)}`;
+    }
+
+    if (field === 'capacityTB') {
+      // Convert GB to TB (divide by 1024)
+      const capacityTB = device.capacityGB / 1024;
+      return capacityTB.toFixed(2);
     }
 
     if (field === 'readSpeed' || field === 'writeSpeed' || field === 'cache') {
@@ -100,9 +105,9 @@ const MemoryTable = ({
       : <ArrowDown className="inline ml-1 w-4 h-4" />;
   };
 
-  // Desired column order: Capacité (GB), Prix, Euro/GB, Euro/TB, Marque, Technologie, Vitesse lecture, Vitesse écriture, RPM, Cache, Format, Type, Interface, Poids, Garantie, Évaluation, Lien affilié
+  // Desired column order: Capacité (GB), Capacité (TB), Prix, Euro/GB, Euro/TB, Marque, Technologie, Vitesse lecture, Vitesse écriture, RPM, Cache, Format, Type, Interface, Poids, Garantie, Évaluation, Lien affilié
   const columnOrder = [
-    'capacityGB', 'price', 'euroPerGB', 'euroPerTB', 'brand', 'technology', 'readSpeed', 'writeSpeed', 'rpm',
+    'capacityGB', 'capacityTB', 'price', 'euroPerGB', 'euroPerTB', 'brand', 'technology', 'readSpeed', 'writeSpeed', 'rpm',
     'cache', 'format', 'type', 'interface', 'weight', 'warranty', 'rating', 'affiliateLink'
   ];
 
