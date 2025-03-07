@@ -1,4 +1,3 @@
-
 import { FilterConfig } from '../types/memory';
 
 export const getDefaultFilters = (): FilterConfig[] => [
@@ -13,6 +12,16 @@ export const getDefaultFilters = (): FilterConfig[] => [
     isVisible: true,
   },
   {
+    field: 'capacityTB',
+    label: 'Capacité (TB)',
+    type: 'range',
+    min: 0,
+    max: 4,
+    step: 0.01,
+    unit: 'TB',
+    isVisible: true,
+  },
+  {
     field: 'price',
     label: 'Prix',
     type: 'range',
@@ -24,12 +33,22 @@ export const getDefaultFilters = (): FilterConfig[] => [
   },
   {
     field: 'euroPerGB',
-    label: 'Euro/GB',
+    label: 'Prix/Go',
     type: 'range',
     min: 0,
     max: 2,
     step: 0.001,
-    unit: '€/GB',
+    unit: '€',
+    isVisible: true,
+  },
+  {
+    field: 'euroPerTB',
+    label: 'Prix/To',
+    type: 'range',
+    min: 0,
+    max: 2000,
+    step: 1,
+    unit: '€',
     isVisible: true,
   },
   {
@@ -46,22 +65,22 @@ export const getDefaultFilters = (): FilterConfig[] => [
   },
   {
     field: 'readSpeed',
-    label: 'Vitesse lecture',
+    label: 'Vitesse lecture (Mo/s)',
     type: 'range',
     min: 0,
     max: 5000,
     step: 10,
-    unit: 'MB/s',
+    unit: '',
     isVisible: true,
   },
   {
     field: 'writeSpeed',
-    label: 'Vitesse écriture',
+    label: 'Vitesse écriture (Mo/s)',
     type: 'range',
     min: 0,
     max: 5000,
     step: 10,
-    unit: 'MB/s',
+    unit: '',
     isVisible: true,
   },
   {
@@ -76,12 +95,12 @@ export const getDefaultFilters = (): FilterConfig[] => [
   },
   {
     field: 'cache',
-    label: 'Cache',
+    label: 'Cache (MB)',
     type: 'range',
     min: 0,
     max: 2048,
     step: 10,
-    unit: 'MB',
+    unit: '',
     isVisible: true,
   },
   {

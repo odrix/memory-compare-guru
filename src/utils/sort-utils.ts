@@ -31,6 +31,23 @@ const applySorting = (a: any, b: any, sortConfig: SortConfig) => {
         const valueA = a.offer.euroPerGB || 0;
         const valueB = b.offer.euroPerGB || 0;
         return sortConfig.direction === 'asc' ? valueA - valueB : valueB - valueA;
+      } else if (sortConfig.field === 'euroPerTB') {
+        // Convert euroPerGB to euroPerTB for filtering
+        const valueA = (a.offer.euroPerGB || 0) * 1024;
+        const valueB = (b.offer.euroPerGB || 0) * 1024;
+        return sortConfig.direction === 'asc' ? valueA - valueB : valueB - valueA;
+      } else if (sortConfig.field === 'capacityTB') {
+        // Convert capacityGB to capacityTB for sorting
+        const valueA = a.device.capacityGB / 1024;
+        const valueB = b.device.capacityGB / 1024;
+        return sortConfig.direction === 'asc' ? valueA - valueB : valueB - valueA;
+      } else if (sortConfig.field === 'affiliateLink') {
+        // Sort by device title for affiliate links
+        const valueA = a.device.title;
+        const valueB = b.device.title;
+        return sortConfig.direction === 'asc'
+          ? valueA.localeCompare(valueB)
+          : valueB.localeCompare(valueA);
       } else {
         // Compare device properties
         const fieldName = sortConfig.field as keyof typeof a.device;
