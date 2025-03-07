@@ -29,14 +29,20 @@ const MemoryTable = ({
 
     if (field === 'euroPerGB') {
       if (!offer.euroPerGB) return 'N/A';
-      return `${offer.euroPerGB.toFixed(3)} €/GB`;
+      return `${offer.euroPerGB.toFixed(3)}`;
     }
 
     if (field === 'euroPerTB') {
       if (!offer.euroPerGB) return 'N/A';
       // Convert €/GB to €/TB (multiply by 1024)
       const euroPerTB = offer.euroPerGB * 1024;
-      return `${euroPerTB.toFixed(2)} €/TB`;
+      return `${euroPerTB.toFixed(2)}`;
+    }
+
+    if (field === 'readSpeed' || field === 'writeSpeed' || field === 'cache') {
+      const value = device[field as keyof typeof device];
+      if (value === undefined || value === null) return 'N/A';
+      return value.toString();
     }
 
     if (field === 'offerUrl') {
