@@ -1321,7 +1321,7 @@ export const memoryDevices: Device[] = [
       "offers": [
           {
               id: "o09f43bb5",
-              "price": 1.129,
+              "price": 1129,
               "currency": "EUR",
               "countryCode": "FR",
               "store": "LDLC",

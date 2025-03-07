@@ -9,7 +9,7 @@ export const getDefaultFilters = (): FilterConfig[] => [
     max: 4000,
     step: 10,
     unit: 'GB',
-    isVisible: true,
+    isVisible: false,
   },
   {
     field: 'capacityTB',
@@ -39,7 +39,7 @@ export const getDefaultFilters = (): FilterConfig[] => [
     max: 2,
     step: 0.001,
     unit: '€',
-    isVisible: true,
+    isVisible: false,
   },
   {
     field: 'euroPerTB',
