@@ -1,0 +1,14 @@
+{
+  "routes": [
+    { "src": "/(.*)", "dest": "/index.html" }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api/server" }
+  ],
+  "functions": {
+    "api/server.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  }
+}
