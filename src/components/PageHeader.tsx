@@ -7,8 +7,9 @@ const PageHeader = () => {
     <header className="bg-card sticky top-0 z-50 w-full border-b border-border shadow-sm">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
-          <Database className="h-6 w-6 text-primary" />
-          <span className="text-xl font-bold">Explorateur de Mémoire</span>
+          <img src="/logo_small.png" alt="Logo" className="h-6 w-6" />
+          <div className="flex flex-col"></div>
+            <span className="text-sm">Comparateur de disques et mémoires</span>
         </div>
         
         <div className="flex items-center gap-2">
