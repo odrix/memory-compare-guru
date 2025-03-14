@@ -24,5 +24,6 @@ export default defineConfig(({ command, mode }) => ({
   build: {
     ssr: command === 'build' && mode === 'production' ? '/src/entry-server.tsx' : undefined,
     outDir: command === 'build' && mode === 'production' ? 'dist/client' : 'dist',
+    manifest: true,
   }
 }));
