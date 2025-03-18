@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FilterConfig, Device, SortConfig, OfferDevice } from "@/types/memory";
+import { useParams } from 'react-router-dom';
+import DeviceTypeMenu from "@/components/DeviceTypeMenu";
 import { memoryDevices, getDefaultFilters } from "@/data/memory-data";
 import { filterOfferDevices } from "@/utils/filter-utils";
 import { sortOfferDevices } from "@/utils/sort-utils";
@@ -203,6 +205,7 @@ const Index = () => {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <PageHeader />
+      <DeviceTypeMenu />
 
       {renderContentArea()}
 
