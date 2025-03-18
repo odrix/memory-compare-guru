@@ -48,10 +48,10 @@ const Index = () => {
   useEffect(() => {
     setFilters((prev) =>
       prev.map((filter) => {
-        if (["capacityGB", "pricePerGB"].includes(filter.field)) {
+        if (["capacityGB", "euroPerGB"].includes(filter.field)) {
           return { ...filter, isVisible: !showInTerabytes };
         }
-        if (["capacityTB", "pricePerTB"].includes(filter.field)) {
+        if (["capacityTB", "euroPerTB"].includes(filter.field)) {
           return { ...filter, isVisible: showInTerabytes };
         }
         return filter;
