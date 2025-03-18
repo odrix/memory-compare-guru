@@ -52,6 +52,8 @@ const applyFilters = (item: OfferDevice, filters: { [key: string]: any }) => {
           if (value.min && fieldValue < value.min) return false;
           if (value.max && fieldValue > value.max) return false;
         }
+      }  else if (key === 'type') {
+        return item.device.type.toLowerCase() === value.toLowerCase();
       } else if (key in item.device) {
         const fieldValue = item.device[key as keyof typeof item.device];
         

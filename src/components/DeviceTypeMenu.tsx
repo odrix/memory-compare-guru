@@ -1,5 +1,4 @@
-
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,10 +10,9 @@ import {
 const DeviceTypeMenu = () => {
   const navigate = useNavigate();
   const deviceTypes = [
-    { label: "All", value: "all" },
-    { label: "NVMe", value: "nvme" },
-    { label: "SSD", value: "ssd" },
     { label: "HDD", value: "hdd" },
+    { label: "SSD", value: "nvme" },
+    { label: "SATA", value: "sata" },
   ];
 
   const handleTypeSelect = (type: string) => {
@@ -27,7 +25,7 @@ const DeviceTypeMenu = () => {
         <NavigationMenuList>
           {deviceTypes.map((type) => (
             <NavigationMenuItem key={type.value}>
-              <NavigationMenuTrigger 
+              <NavigationMenuTrigger
                 onClick={() => handleTypeSelect(type.value)}
                 className="cursor-pointer"
               >

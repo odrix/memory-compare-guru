@@ -101,6 +101,7 @@ const Index = () => {
 
     const processedFilters = { ...activeFilters };
     if (deviceType && deviceType !== "all") {
+      console.log(deviceType);
       processedFilters.type = deviceType;
     }
     Object.keys(processedFilters).forEach((key) => {
