@@ -15,25 +15,23 @@ const Index = () => {
   const [devices, setDevices] = useState<Device[]>(memoryDevices);
   const [offerDevices, setOfferDevices] = useState<OfferDevice[]>([]);
   const [filteredOfferDevices, setFilteredOfferDevices] = useState<OfferDevice[]>([]);
-  const defaultFilters = getDefaultFilters(); // Get default filters here
-  const [filters, setFilters] = useState<FilterConfig[]>(defaultFilters);
+  const [filters, setFilters] = useState<FilterConfig[]>(getDefaultFilters());
   const [activeFilters, setActiveFilters] = useState<{ [key: string]: any }>({});
   const [sortConfig, setSortConfig] = useState<SortConfig>({
     field: 'capacityGB',
     direction: 'desc'
   });
-  const [showOfferTitles, setShowOfferTitles] = useState(false);
+  const [showOfferTitles, setShowOfferTitles] = useState<boolean>(true);
   const [isMobile, setIsMobile] = useState(false);
-  const [displayInTB, setDisplayInTB] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-
+    
     checkMobile();
     window.addEventListener('resize', checkMobile);
-
+    
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
@@ -46,14 +44,14 @@ const Index = () => {
     const prices = devices
       .map(device => getBestPrice(device))
       .filter((price): price is number => price !== null);
-
+    
     const minPrice = Math.min(...prices);
     const maxPrice = Math.max(...prices);
-
-    setFilters(prevFilters =>
-      prevFilters.map(filter =>
-        filter.field === 'price'
-          ? { ...filter, min: minPrice, max: maxPrice }
+    
+    setFilters(prevFilters => 
+      prevFilters.map(filter => 
+        filter.field === 'price' 
+          ? { ...filter, min: minPrice, max: maxPrice } 
           : filter
       )
     );
@@ -61,34 +59,19 @@ const Index = () => {
 
   useEffect(() => {
     let result = [...offerDevices];
-
+    
     const processedFilters = { ...activeFilters };
     Object.keys(processedFilters).forEach(key => {
       if (processedFilters[key] === 'all') {
         delete processedFilters[key];
       }
     });
-
+    
     result = filterOfferDevices(result, processedFilters);
     result = sortOfferDevices(result, sortConfig);
-
+    
     setFilteredOfferDevices(result);
   }, [offerDevices, activeFilters, sortConfig]);
-
-  useEffect(() => {
-    // Update filter visibility based on display unit
-    const filters = [...defaultFilters];
-    filters.forEach(filter => {
-      if (filter.field === 'euroPerGB' || filter.field === 'capacityGB') {
-        filter.isVisible = !displayInTB;
-      }
-      if (filter.field === 'euroPerTB' || filter.field === 'capacityTB') {
-        filter.isVisible = displayInTB;
-      }
-    });
-    setFilters(filters);
-  }, [displayInTB, defaultFilters]);
-
 
   const handleFilterChange = (field: string, value: any) => {
     setActiveFilters(prev => ({
@@ -106,9 +89,9 @@ const Index = () => {
   };
 
   const handleColumnVisibilityChange = (field: string, visible: boolean) => {
-    setFilters(prevFilters =>
-      prevFilters.map(filter =>
-        filter.field === field
+    setFilters(prevFilters => 
+      prevFilters.map(filter => 
+        filter.field === field 
           ? { ...filter, isVisible: visible }
           : filter
       )
@@ -116,8 +99,8 @@ const Index = () => {
   };
 
   const handleSort = (field: string) => {
-    const typedField = field as keyof Device | "price" | "euroPerGB" | "offerUrl" | "euroPerTB" | "capacityTB";
-
+    const typedField = field as keyof Device | "price" | "euroPerGB" | "offerUrl";
+    
     setSortConfig(prev => ({
       field: typedField,
       direction: prev.field === typedField && prev.direction === 'asc' ? 'desc' : 'asc'
@@ -126,12 +109,12 @@ const Index = () => {
 
   const resetFilters = () => {
     setActiveFilters({});
-
+    
     setSortConfig({
       field: 'capacityGB',
       direction: 'desc'
     });
-
+    
     toast({
       title: "Filtres réinitialisés",
       description: "Tous les filtres ont été effacés",
@@ -145,7 +128,7 @@ const Index = () => {
 
   const handleToggleOfferTitles = (checked: boolean) => {
     setShowOfferTitles(checked);
-
+    
     if (!isMobile) {
       toast({
         title: "Affichage modifié",
@@ -169,9 +152,7 @@ const Index = () => {
       sortConfig,
       onSort: handleSort,
       showOfferTitles,
-      onToggleOfferTitles: handleToggleOfferTitles,
-      displayInTB,
-      setDisplayInTB
+      onToggleOfferTitles: handleToggleOfferTitles
     };
 
     return <ContentArea {...contentAreaProps} />;
