@@ -6,11 +6,15 @@ import { Label } from '@/components/ui/label';
 interface DisplaySettingsProps {
   showOfferTitles: boolean;
   onToggleOfferTitles: (checked: boolean) => void;
+  showInTerabytes: boolean;
+  onToggleTerabytes: (checked: boolean) => void;
 }
 
 const DisplaySettings: React.FC<DisplaySettingsProps> = ({
   showOfferTitles,
-  onToggleOfferTitles
+  onToggleOfferTitles,
+  showInTerabytes,
+  onToggleTerabytes
 }) => {
   return (
     <div className="space-y-4 border-b border-border pb-4">
@@ -25,6 +29,20 @@ const DisplaySettings: React.FC<DisplaySettingsProps> = ({
           onCheckedChange={onToggleOfferTitles}
           className="bg-gray-300 data-[state=checked]:bg-green-300"
         />
+      </div>
+      <div className="flex items-center justify-between">
+        <Label htmlFor="show-in-terabytes" className="text-sm">
+          Go
+        </Label>
+        <Switch
+          id="show-in-terabytes"
+          checked={showInTerabytes}
+          onCheckedChange={onToggleTerabytes}
+          className="bg-gray-300 data-[state=checked]:bg-green-300"
+        />
+        <Label htmlFor="show-in-terabytes" className="text-sm">
+          To
+        </Label>
       </div>
     </div>
   );

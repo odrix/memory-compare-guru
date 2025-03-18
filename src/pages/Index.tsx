@@ -15,13 +15,37 @@ const Index = () => {
   const [devices, setDevices] = useState<Device[]>(memoryDevices);
   const [offerDevices, setOfferDevices] = useState<OfferDevice[]>([]);
   const [filteredOfferDevices, setFilteredOfferDevices] = useState<OfferDevice[]>([]);
-  const [filters, setFilters] = useState<FilterConfig[]>(getDefaultFilters());
+  const [filters, setFilters] = useState<FilterConfig[]>(() => {
+    const defaultFilters = getDefaultFilters();
+    return defaultFilters.map(filter => {
+      if (['capacityGB', 'pricePerGB', 'capacityTB', 'pricePerTB'].includes(filter.field)) {
+        return {
+          ...filter,
+          isVisible: false
+        };
+      }
+      return filter;
+    });
+  });
+
+  useEffect(() => {
+    setFilters(prev => prev.map(filter => {
+      if (['capacityGB', 'pricePerGB'].includes(filter.field)) {
+        return { ...filter, isVisible: !showInTerabytes };
+      }
+      if (['capacityTB', 'pricePerTB'].includes(filter.field)) {
+        return { ...filter, isVisible: showInTerabytes };
+      }
+      return filter;
+    }));
+  }, [showInTerabytes]);
   const [activeFilters, setActiveFilters] = useState<{ [key: string]: any }>({});
   const [sortConfig, setSortConfig] = useState<SortConfig>({
     field: 'capacityGB',
     direction: 'desc'
   });
   const [showOfferTitles, setShowOfferTitles] = useState<boolean>(true);
+  const [showInTerabytes, setShowInTerabytes] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
