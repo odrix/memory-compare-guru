@@ -94,8 +94,15 @@ const Index = () => {
     );
   }, [devices]);
 
+  const { deviceType } = useParams();
+
   useEffect(() => {
     let result = [...offerDevices];
+
+    // Apply type filter from URL
+    if (deviceType && deviceType !== 'all') {
+      result = result.filter(device => device.type.toLowerCase() === deviceType.toLowerCase());
+    }
 
     const processedFilters = { ...activeFilters };
     Object.keys(processedFilters).forEach((key) => {
