@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FilterConfig, Device, SortConfig, OfferDevice } from "@/types/memory";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import DeviceTypeMenu from "@/components/DeviceTypeMenu";
 import { memoryDevices, getDefaultFilters } from "@/data/memory-data";
 import { filterOfferDevices } from "@/utils/filter-utils";
@@ -99,12 +99,10 @@ const Index = () => {
   useEffect(() => {
     let result = [...offerDevices];
 
-    // Apply type filter from URL
-    if (deviceType && deviceType !== 'all') {
-      result = result.filter(device => device.type.toLowerCase() === deviceType.toLowerCase());
-    }
-
     const processedFilters = { ...activeFilters };
+    if (deviceType && deviceType !== "all") {
+      processedFilters.type = deviceType;
+    }
     Object.keys(processedFilters).forEach((key) => {
       if (processedFilters[key] === "all") {
         delete processedFilters[key];
