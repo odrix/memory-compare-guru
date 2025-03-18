@@ -113,7 +113,7 @@ const Index = () => {
     result = sortOfferDevices(result, sortConfig);
 
     setFilteredOfferDevices(result);
-  }, [offerDevices, activeFilters, sortConfig]);
+  }, [offerDevices, activeFilters, sortConfig, deviceType]);
 
   const handleFilterChange = (field: string, value: any) => {
     setActiveFilters((prev) => ({
