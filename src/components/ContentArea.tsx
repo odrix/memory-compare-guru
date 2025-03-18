@@ -19,6 +19,8 @@ interface ContentAreaProps {
   onSort: (field: string) => void;
   showOfferTitles: boolean;
   onToggleOfferTitles: (checked: boolean) => void;
+  showInTerabytes: boolean;
+  onToggleTerabytes: (checked: boolean) => void;
 }
 
 const ContentArea = ({
@@ -34,7 +36,9 @@ const ContentArea = ({
   sortConfig,
   onSort,
   showOfferTitles,
-  onToggleOfferTitles
+  onToggleOfferTitles,
+  showInTerabytes,
+  onToggleTerabytes,
 }: ContentAreaProps) => {
   return (
     <main className="flex-1 container mx-auto px-4 py-8">
@@ -56,6 +60,8 @@ const ContentArea = ({
             onClose={onClose}
             showOfferTitles={showOfferTitles}
             onToggleOfferTitles={onToggleOfferTitles}
+            showInTerabytes={showInTerabytes}
+            onToggleTerabytes={onToggleTerabytes}
           />
         </div>
 
@@ -73,6 +79,7 @@ const ContentArea = ({
               sortConfig={sortConfig}
               onSort={onSort}
               showOfferTitles={showOfferTitles}
+              showInTerabytes={showInTerabytes}
             />
           </div>
         </div>

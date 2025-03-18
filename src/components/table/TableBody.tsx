@@ -7,9 +7,10 @@ interface TableBodyProps {
   offerDevices: OfferDevice[];
   visibleFilters: FilterConfig[];
   showOfferTitles: boolean;
+  showInTerabytes: boolean;
 }
 
-const TableBody = ({ offerDevices, visibleFilters, showOfferTitles }: TableBodyProps) => {
+const TableBody = ({ offerDevices, visibleFilters, showOfferTitles, showInTerabytes }: TableBodyProps) => {
   if (offerDevices.length === 0) {
     return (
       <tbody>
@@ -31,6 +32,7 @@ const TableBody = ({ offerDevices, visibleFilters, showOfferTitles }: TableBodyP
           visibleFilters={visibleFilters}
           index={index}
           showOfferTitles={showOfferTitles}
+          showInTerabytes={showInTerabytes}
         />
       ))}
     </tbody>

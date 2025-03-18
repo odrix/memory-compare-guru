@@ -1,9 +1,8 @@
-
-import React from 'react';
-import { FilterConfig, OfferDevice } from '../types/memory';
-import { ChevronRight } from 'lucide-react';
-import DisplaySettings from './filters/DisplaySettings';
-import FilterItem from './filters/FilterItem';
+import React from "react";
+import { FilterConfig, OfferDevice } from "../types/memory";
+import { ChevronRight } from "lucide-react";
+import DisplaySettings from "./filters/DisplaySettings";
+import FilterItem from "./filters/FilterItem";
 
 interface FilterPanelProps {
   filters: FilterConfig[];
@@ -16,6 +15,8 @@ interface FilterPanelProps {
   onClose: () => void;
   showOfferTitles: boolean;
   onToggleOfferTitles: (checked: boolean) => void;
+  showInTerabytes: boolean;
+  onToggleTerabytes: (checked: boolean) => void;
 }
 
 const FilterPanel: React.FC<FilterPanelProps> = ({
@@ -28,12 +29,14 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   isOpen,
   onClose,
   showOfferTitles,
-  onToggleOfferTitles
+  onToggleOfferTitles,
+  showInTerabytes,
+  onToggleTerabytes,
 }) => {
   return (
     <div
       className={`fixed md:relative top-0 left-0 h-full w-full md:w-80 md:max-h-[calc(100vh-12rem)] bg-card z-50 md:z-0 overflow-y-auto transition-transform duration-300 ease-in-out ${
-        isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+        isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
       }`}
     >
       <div className="sticky top-0 bg-card z-10 p-6 pb-4 border-b border-border">
@@ -59,9 +62,11 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
 
       <div className="p-6 pt-4 space-y-8">
         {/* Display Settings Section */}
-        <DisplaySettings 
+        <DisplaySettings
           showOfferTitles={showOfferTitles}
           onToggleOfferTitles={onToggleOfferTitles}
+          showInTerabytes={showInTerabytes}
+          onToggleTerabytes={onToggleTerabytes}
         />
 
         {/* Filters Section */}
@@ -69,8 +74,12 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
           <FilterItem
             key={filter.field}
             filter={filter}
-            value={activeFilters[filter.field] || 
-              (filter.type === 'range' ? { min: filter.min || 0, max: filter.max || 100 } : '')}
+            value={
+              activeFilters[filter.field] ||
+              (filter.type === "range"
+                ? { min: filter.min || 0, max: filter.max || 100 }
+                : "")
+            }
             devices={offerDevices}
             onFilterChange={onFilterChange}
             onVisibilityChange={onVisibilityChange}

@@ -11,6 +11,7 @@ interface MemoryTableProps {
   sortConfig: SortConfig;
   onSort: (field: string) => void;
   showOfferTitles: boolean;
+  showInTerabytes: boolean;
 }
 
 const MemoryTable = ({ 
@@ -18,7 +19,8 @@ const MemoryTable = ({
   filters, 
   sortConfig, 
   onSort,
-  showOfferTitles 
+  showOfferTitles ,
+  showInTerabytes
 }: MemoryTableProps) => {
   const visibleFilters = getVisibleFilters(filters, showOfferTitles);
 
@@ -34,6 +36,7 @@ const MemoryTable = ({
           offerDevices={offerDevices} 
           visibleFilters={visibleFilters} 
           showOfferTitles={showOfferTitles} 
+          showInTerabytes={showInTerabytes}
         />
       </table>
     </div>

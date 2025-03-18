@@ -10,9 +10,10 @@ interface TableRowProps {
   visibleFilters: FilterConfig[];
   index: number;
   showOfferTitles: boolean;
+  showInTerabytes: boolean;
 }
 
-const TableRow = ({ offerDevice, visibleFilters, index, showOfferTitles }: TableRowProps) => {
+const TableRow = ({ offerDevice, visibleFilters, index, showOfferTitles, showInTerabytes }: TableRowProps) => {
   const { device, offer } = offerDevice;
   const deviceTitle = getDeviceTitle(offerDevice);
   

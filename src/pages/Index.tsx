@@ -1,62 +1,73 @@
-import React, { useState, useEffect } from 'react';
-import { FilterConfig, Device, SortConfig, OfferDevice } from '@/types/memory';
-import { memoryDevices, getDefaultFilters } from '@/data/memory-data';
-import { filterOfferDevices } from '@/utils/filter-utils';
-import { sortOfferDevices } from '@/utils/sort-utils';
-import { createOfferDevices, getBestPrice } from '@/utils/utils';
-import { useToast } from '@/components/ui/use-toast';
-import PageHeader from '@/components/PageHeader';
-import ContentArea from '@/components/ContentArea';
-import PageFooter from '@/components/PageFooter';
+import React, { useState, useEffect } from "react";
+import { FilterConfig, Device, SortConfig, OfferDevice } from "@/types/memory";
+import { memoryDevices, getDefaultFilters } from "@/data/memory-data";
+import { filterOfferDevices } from "@/utils/filter-utils";
+import { sortOfferDevices } from "@/utils/sort-utils";
+import { createOfferDevices, getBestPrice } from "@/utils/utils";
+import { useToast } from "@/components/ui/use-toast";
+import PageHeader from "@/components/PageHeader";
+import ContentArea from "@/components/ContentArea";
+import PageFooter from "@/components/PageFooter";
 
 const Index = () => {
   const { toast } = useToast();
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
   const [devices, setDevices] = useState<Device[]>(memoryDevices);
   const [offerDevices, setOfferDevices] = useState<OfferDevice[]>([]);
-  const [filteredOfferDevices, setFilteredOfferDevices] = useState<OfferDevice[]>([]);
+  const [filteredOfferDevices, setFilteredOfferDevices] = useState<
+    OfferDevice[]
+  >([]);
   const [filters, setFilters] = useState<FilterConfig[]>(() => {
     const defaultFilters = getDefaultFilters();
-    return defaultFilters.map(filter => {
-      if (['capacityGB', 'pricePerGB', 'capacityTB', 'pricePerTB'].includes(filter.field)) {
+    return defaultFilters.map((filter) => {
+      if (
+        ["capacityGB", "pricePerGB", "capacityTB", "pricePerTB"].includes(
+          filter.field,
+        )
+      ) {
         return {
           ...filter,
-          isVisible: false
+          isVisible: false,
         };
       }
       return filter;
     });
   });
 
-  useEffect(() => {
-    setFilters(prev => prev.map(filter => {
-      if (['capacityGB', 'pricePerGB'].includes(filter.field)) {
-        return { ...filter, isVisible: !showInTerabytes };
-      }
-      if (['capacityTB', 'pricePerTB'].includes(filter.field)) {
-        return { ...filter, isVisible: showInTerabytes };
-      }
-      return filter;
-    }));
-  }, [showInTerabytes]);
-  const [activeFilters, setActiveFilters] = useState<{ [key: string]: any }>({});
+  const [activeFilters, setActiveFilters] = useState<{ [key: string]: any }>(
+    {},
+  );
   const [sortConfig, setSortConfig] = useState<SortConfig>({
-    field: 'capacityGB',
-    direction: 'desc'
+    field: "capacityGB",
+    direction: "desc",
   });
   const [showOfferTitles, setShowOfferTitles] = useState<boolean>(true);
   const [showInTerabytes, setShowInTerabytes] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    setFilters((prev) =>
+      prev.map((filter) => {
+        if (["capacityGB", "pricePerGB"].includes(filter.field)) {
+          return { ...filter, isVisible: !showInTerabytes };
+        }
+        if (["capacityTB", "pricePerTB"].includes(filter.field)) {
+          return { ...filter, isVisible: showInTerabytes };
+        }
+        return filter;
+      }),
+    );
+  }, [showInTerabytes]);
+
+  useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   useEffect(() => {
@@ -66,41 +77,41 @@ const Index = () => {
 
   useEffect(() => {
     const prices = devices
-      .map(device => getBestPrice(device))
+      .map((device) => getBestPrice(device))
       .filter((price): price is number => price !== null);
-    
+
     const minPrice = Math.min(...prices);
     const maxPrice = Math.max(...prices);
-    
-    setFilters(prevFilters => 
-      prevFilters.map(filter => 
-        filter.field === 'price' 
-          ? { ...filter, min: minPrice, max: maxPrice } 
-          : filter
-      )
+
+    setFilters((prevFilters) =>
+      prevFilters.map((filter) =>
+        filter.field === "price"
+          ? { ...filter, min: minPrice, max: maxPrice }
+          : filter,
+      ),
     );
   }, [devices]);
 
   useEffect(() => {
     let result = [...offerDevices];
-    
+
     const processedFilters = { ...activeFilters };
-    Object.keys(processedFilters).forEach(key => {
-      if (processedFilters[key] === 'all') {
+    Object.keys(processedFilters).forEach((key) => {
+      if (processedFilters[key] === "all") {
         delete processedFilters[key];
       }
     });
-    
+
     result = filterOfferDevices(result, processedFilters);
     result = sortOfferDevices(result, sortConfig);
-    
+
     setFilteredOfferDevices(result);
   }, [offerDevices, activeFilters, sortConfig]);
 
   const handleFilterChange = (field: string, value: any) => {
-    setActiveFilters(prev => ({
+    setActiveFilters((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
 
     if (!isMobile) {
@@ -113,32 +124,35 @@ const Index = () => {
   };
 
   const handleColumnVisibilityChange = (field: string, visible: boolean) => {
-    setFilters(prevFilters => 
-      prevFilters.map(filter => 
-        filter.field === field 
-          ? { ...filter, isVisible: visible }
-          : filter
-      )
+    setFilters((prevFilters) =>
+      prevFilters.map((filter) =>
+        filter.field === field ? { ...filter, isVisible: visible } : filter,
+      ),
     );
   };
 
   const handleSort = (field: string) => {
-    const typedField = field as keyof Device | "price" | "euroPerGB" | "offerUrl";
-    
-    setSortConfig(prev => ({
+    const typedField = field as
+      | keyof Device
+      | "price"
+      | "euroPerGB"
+      | "offerUrl";
+
+    setSortConfig((prev) => ({
       field: typedField,
-      direction: prev.field === typedField && prev.direction === 'asc' ? 'desc' : 'asc'
+      direction:
+        prev.field === typedField && prev.direction === "asc" ? "desc" : "asc",
     }));
   };
 
   const resetFilters = () => {
     setActiveFilters({});
-    
+
     setSortConfig({
-      field: 'capacityGB',
-      direction: 'desc'
+      field: "capacityGB",
+      direction: "desc",
     });
-    
+
     toast({
       title: "Filtres réinitialisés",
       description: "Tous les filtres ont été effacés",
@@ -147,16 +161,18 @@ const Index = () => {
   };
 
   const toggleFilterPanel = () => {
-    setIsFilterPanelOpen(prev => !prev);
+    setIsFilterPanelOpen((prev) => !prev);
   };
 
   const handleToggleOfferTitles = (checked: boolean) => {
     setShowOfferTitles(checked);
-    
+
     if (!isMobile) {
       toast({
         title: "Affichage modifié",
-        description: checked ? "Titres des offres affichés" : "Titres des offres masqués",
+        description: checked
+          ? "Titres des offres affichés"
+          : "Titres des offres masqués",
         duration: 1500,
       });
     }
@@ -176,7 +192,9 @@ const Index = () => {
       sortConfig,
       onSort: handleSort,
       showOfferTitles,
-      onToggleOfferTitles: handleToggleOfferTitles
+      onToggleOfferTitles: handleToggleOfferTitles,
+      showInTerabytes,
+      onToggleTerabytes: setShowInTerabytes,
     };
 
     return <ContentArea {...contentAreaProps} />;
