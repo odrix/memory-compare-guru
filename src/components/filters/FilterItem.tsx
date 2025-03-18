@@ -22,7 +22,7 @@ const FilterItem: React.FC<FilterItemProps> = ({
 }) => {
   const isCapacityOrEuroFilter = ['capacityGB', 'euroPerGB', 'capacityTB', 'euroPerTB'].includes(filter.field);
 
-  if (!filter.isVisible) {
+  if (isCapacityOrEuroFilter && !filter.isVisible) {
     return null;
   }
 
