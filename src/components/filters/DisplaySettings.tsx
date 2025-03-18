@@ -6,11 +6,15 @@ import { Label } from '@/components/ui/label';
 interface DisplaySettingsProps {
   showOfferTitles: boolean;
   onToggleOfferTitles: (checked: boolean) => void;
+  displayInTB: boolean;
+  onToggleDisplayUnit: (checked: boolean) => void;
 }
 
 const DisplaySettings: React.FC<DisplaySettingsProps> = ({
   showOfferTitles,
-  onToggleOfferTitles
+  onToggleOfferTitles,
+  displayInTB,
+  onToggleDisplayUnit
 }) => {
   return (
     <div className="space-y-4 border-b border-border pb-4">
@@ -23,6 +27,17 @@ const DisplaySettings: React.FC<DisplaySettingsProps> = ({
           id="show-offer-titles"
           checked={showOfferTitles}
           onCheckedChange={onToggleOfferTitles}
+          className="bg-gray-300 data-[state=checked]:bg-green-300"
+        />
+      </div>
+      <div className="flex items-center justify-between">
+        <Label htmlFor="display-unit" className="text-sm">
+          Afficher en téraoctets (To)
+        </Label>
+        <Switch
+          id="display-unit"
+          checked={displayInTB}
+          onCheckedChange={onToggleDisplayUnit}
           className="bg-gray-300 data-[state=checked]:bg-green-300"
         />
       </div>
