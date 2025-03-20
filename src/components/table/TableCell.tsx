@@ -2,6 +2,7 @@
 import React from 'react';
 import { OfferDevice } from '../../types/memory';
 import { ExternalLink } from 'lucide-react';
+import { title } from 'process';
 
 interface TableCellProps {
   offerDevice: OfferDevice;
@@ -70,6 +71,8 @@ const TableCell = ({ offerDevice, field, unit }: TableCellProps) => {
         target="_blank"
         rel="noopener noreferrer"
         className="flex items-center text-primary hover:underline text-xs"
+        data-umami-event="affiliate-link"
+        data-umami-params={`{ "title": "${deviceTitle}" }`}
       >
         <span className="truncate mr-1">
           {deviceTitle}{deviceSubtitle ? ` - ${deviceSubtitle}` : ''} - {storeName}
