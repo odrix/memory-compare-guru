@@ -30,7 +30,7 @@ const DisplaySettings: React.FC<DisplaySettingsProps> = ({
           className="bg-gray-300 data-[state=checked]:bg-green-300"
         />
       </div>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-end">
         <Label htmlFor="show-in-terabytes" className="text-sm">
           Go
         </Label>
@@ -38,9 +38,11 @@ const DisplaySettings: React.FC<DisplaySettingsProps> = ({
           id="show-in-terabytes"
           checked={showInTerabytes}
           onCheckedChange={onToggleTerabytes}
-          className="bg-gray-300 data-[state=checked]:bg-green-300"
+          className="bg-gray-300 mx-4
+                    data-[state=checked]:bg-amber-600 
+                    data-[state=unchecked]:bg-indigo-400"
         />
-        <Label htmlFor="show-in-terabytes" className="text-sm">
+        <Label htmlFor="show-in-terabytes" className="text-sm mr-2">
           To
         </Label>
       </div>
