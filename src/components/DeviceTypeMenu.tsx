@@ -1,10 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
+  NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 
 const DeviceTypeMenu = () => {
@@ -19,18 +18,21 @@ const DeviceTypeMenu = () => {
     navigate(`/type/${type}`);
   };
 
+  const { deviceType } = useParams();
+
   return (
     <div className="flex justify-center border-b border-border">
       <NavigationMenu>
         <NavigationMenuList>
           {deviceTypes.map((type) => (
             <NavigationMenuItem key={type.value}>
-              <NavigationMenuTrigger
-                onClick={() => handleTypeSelect(type.value)}
+              <NavigationMenuLink
+                href = {`/type/${type.value}`}
+                active = {deviceType === type.value}
                 className="cursor-pointer"
               >
                 {type.label}
-              </NavigationMenuTrigger>
+              </NavigationMenuLink>
             </NavigationMenuItem>
           ))}
         </NavigationMenuList>
