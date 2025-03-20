@@ -21,9 +21,9 @@ export default defineConfig(({ command, mode }) => ({
     },
   },
   // Add build options for SSR
-  build: {
-    ssr: command === 'build' && mode === 'production' ? '/src/entry-server.tsx' : undefined,
-    outDir: command === 'build' && mode === 'production' ? 'dist/client' : 'dist',
-    manifest: true,
-  }
+  // build: {
+  //   ssr: command === 'build' && mode === 'production' ? '/src/entry-server.tsx' : undefined,
+  //   outDir: command === 'build' && mode === 'production' ? 'dist/client' : 'dist',
+  //   manifest: true,
+  // }
 }));
