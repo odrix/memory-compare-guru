@@ -16,7 +16,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' topdisks.eu cloud.umami.is fonts.googleapis.com; style-src 'self' topdisks.eu; frame-ancestors 'none';"
+          "value": "default-src 'self'; script-src 'self' topdisks.eu cloud.umami.is; style-src 'self' topdisks.eu fonts.googleapis.com; frame-ancestors 'none';"
         },
         {
           "key": "Referrer-Policy",
