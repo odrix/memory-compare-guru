@@ -8,7 +8,7 @@ const PageHeader = () => {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <a href="/">
-            <img src="/logo_small.png" alt="Logo" className="h-12" title='TopDisks.eu' />
+            <img src="/logo_mini.png" alt="Logo" className="h-12" title='TopDisks.eu' />
           </a>
           <div className="flex flex-col">- </div>
           <span className="text-sm">Comparateur de disques et mémoires</span>
