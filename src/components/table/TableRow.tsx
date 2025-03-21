@@ -13,14 +13,15 @@ interface TableRowProps {
   showInTerabytes: boolean;
 }
 
-const TableRow = ({ offerDevice, visibleFilters, index, showOfferTitles, showInTerabytes }: TableRowProps) => {
+const TableRow = ({ offerDevice, visibleFilters, index, showOfferTitles, showInTerabytes}: TableRowProps) => {
   const { device, offer } = offerDevice;
   const deviceTitle = getDeviceTitle(offerDevice);
   
   return (
-    <React.Fragment>
+    <>
       {showOfferTitles && (
-        <tr className="bg-muted/5 border-t border-border">
+        <tr key={`${device.id}-${offer.id}-title`} 
+            className="bg-muted/5 border-t border-border">
           <td colSpan={visibleFilters.length} className="px-1 pt-1 relative">
             <div className="flex justify-between items-center">
               <span className="text-xxs text-muted-foreground font-medium uppercase sticky left-0 bg-muted/5 pr-2 py-1 z-10">
@@ -45,7 +46,7 @@ const TableRow = ({ offerDevice, visibleFilters, index, showOfferTitles, showInT
           </td>
         </tr>
       )}
-      <tr
+      <tr key={`${device.id}-${offer.id}-info`}
         className={`
           border-b border-border hover:bg-muted/20 transition-colors
           ${index % 2 === 0 ? 'bg-background' : 'bg-muted/10'}
@@ -58,7 +59,7 @@ const TableRow = ({ offerDevice, visibleFilters, index, showOfferTitles, showInT
           </td>
         ))}
       </tr>
-    </React.Fragment>
+    </>
   );
 };
 
