@@ -72,7 +72,7 @@ const TableCell = ({ offerDevice, field, unit }: TableCellProps) => {
         rel="noopener noreferrer"
         className="flex items-center text-primary hover:underline text-xs"
         data-umami-event="affiliate-link"
-        data-umami-params={`{ "title": "${deviceTitle}" }`}
+        data-umami-event-url={offer.url}
       >
         <span className="truncate mr-1">
           {deviceTitle}{deviceSubtitle ? ` - ${deviceSubtitle}` : ''} - {storeName}
