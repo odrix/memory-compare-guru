@@ -16,7 +16,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' topdisks.eu cloud.umami.is; script-src-elem 'self' topdisks.eu cloud.umami.is ;connect-src 'self' topdisks.eu api-gateway.umami.dev; style-src 'self' topdisks.eu fonts.googleapis.com; style-src-elem 'self' topdisks.eu; font-src 'self' topdisks.eu fonts.googleapis.com fonts.gstatic.com; frame-ancestors 'none';"
+          "value": "default-src 'self'; script-src 'self' topdisks.eu cloud.umami.is; script-src-elem 'self' topdisks.eu cloud.umami.is ;connect-src 'self' topdisks.eu api-gateway.umami.dev; style-src 'self' topdisks.eu fonts.googleapis.com; style-src-elem 'self' topdisks.eu fonts.googleapis.com; font-src 'self' topdisks.eu fonts.googleapis.com fonts.gstatic.com; frame-ancestors 'none';"
         },
         {
           "key": "Referrer-Policy",
