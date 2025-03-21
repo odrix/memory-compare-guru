@@ -1,6 +1,7 @@
 
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
+import preload from "vite-plugin-preload";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
@@ -12,6 +13,7 @@ export default defineConfig(({ command, mode }) => ({
   },
   plugins: [
     react(),
+    preload(),
     mode === 'development' &&
     componentTagger(),
   ].filter(Boolean),
