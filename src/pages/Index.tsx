@@ -43,9 +43,9 @@ const Index = () => {
     field: "capacityGB",
     direction: "desc",
   });
-  const [showOfferTitles, setShowOfferTitles] = useState<boolean>(true);
+  const [showOfferTitles, setShowOfferTitles] = useState<boolean>(false);
   const [showInTerabytes, setShowInTerabytes] = useState<boolean>(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
 
   useEffect(() => {
     setFilters((prev) =>
@@ -212,7 +212,11 @@ const Index = () => {
     <div className="flex flex-col min-h-screen bg-background">
       <PageHeader />
       <DeviceTypeMenu />
+      <p>Bienvenue sur topdisks, votre comparateur pour choisir le meilleur disque dur. Que vous cherchiez un SSD rapide pour le gaming, un HDD spacieux pour la sauvegarde, ou un disque dur hybride pour un usage polyvalent, notre comparateur vous aide à trouver le modèle parfait.
 
+Utilisez nos filtres pour affiner votre recherche par type, capacité, vitesse, et plus encore.
+
+Commencez votre recherche dès maintenant et trouvez le disque dur qui répond à tous vos besoins !</p>
       {renderContentArea()}
 
       <PageFooter />
