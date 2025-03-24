@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import Sitemap from "./pages/Sitemap";
 
 // Create a QueryClient instance that can be used on both server and client
 const queryClient = new QueryClient({
@@ -27,7 +26,6 @@ const App = () => (
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/type/:deviceType" element={<Index />} />
-        <Route path="/sitemap.xml" element={<Sitemap />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
