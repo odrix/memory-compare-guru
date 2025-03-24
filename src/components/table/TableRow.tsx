@@ -55,7 +55,7 @@ const TableRow = ({ offerDevice, visibleFilters, index, showOfferTitles, showInT
       >
         {visibleFilters.map((filter) => (
           <td key={`${device.id}-${offer.id}-${filter.field}`} className="px-4 py-4 text-sm">
-            <TableCell offerDevice={offerDevice} field={filter.field} unit={filter.unit} />
+            <TableCell offerDevice={offerDevice} field={filter.field} unit={filter.unit} showOfferTitles={showOfferTitles} />
           </td>
         ))}
       </tr>

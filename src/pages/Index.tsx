@@ -212,11 +212,20 @@ const Index = () => {
     <div className="flex flex-col min-h-screen bg-background">
       <PageHeader />
       <DeviceTypeMenu />
-      <p>Bienvenue sur topdisks, votre comparateur pour choisir le meilleur disque dur. Que vous cherchiez un SSD rapide pour le gaming, un HDD spacieux pour la sauvegarde, ou un disque dur hybride pour un usage polyvalent, notre comparateur vous aide à trouver le modèle parfait.
-
-Utilisez nos filtres pour affiner votre recherche par type, capacité, vitesse, et plus encore.
-
-Commencez votre recherche dès maintenant et trouvez le disque dur qui répond à tous vos besoins !</p>
+      <div className="p-4 text-center bg-gray-100 rounded-md shadow-md">
+        <p className="text-md mb-1">
+          Bienvenue sur topdisks, votre comparateur pour choisir le meilleur disque dur.
+         </p>
+         <p className="text-sm">
+            Que vous cherchiez un SSD rapide pour le gaming, un HDD spacieux pour la sauvegarde, ou un disque dur hybride pour un usage polyvalent,
+        </p>
+        <p className="text-sm mb-1">
+          utilisez nos filtres pour affiner votre recherche par type, capacité, vitesse, et plus encore.
+        </p>
+        <p className="text-sm">
+          Commencez votre recherche dès maintenant et trouvez le disque dur qui répond à tous vos besoins !
+        </p>
+      </div>
       {renderContentArea()}
 
       <PageFooter />

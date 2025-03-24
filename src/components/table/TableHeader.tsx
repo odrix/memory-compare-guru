@@ -21,7 +21,7 @@ const TableHeader = ({ filters, sortConfig, onSort }: TableHeaderProps) => {
   // Desired column order: Capacité (GB), Capacité (TB), Prix, Euro/GB, Euro/TB, Marque, Technologie, Vitesse lecture, Vitesse écriture, RPM, Cache, Format, Type, Interface, Poids, Garantie, Évaluation, Lien affilié
   const columnOrder = [
     'capacityGB', 'capacityTB', 'price', 'euroPerGB', 'euroPerTB', 'brand', 'technology', 'readSpeed', 'writeSpeed', 'rpm',
-    'cache', 'format', 'type', 'interface', 'weight', 'warranty', 'rating', 'affiliateLink'
+    'cache', 'format', 'type', 'interface', 'weight', 'warranty', 'rating',  'affiliateLink'
   ];
 
   // Get visible filters and sort them according to the column order
@@ -39,7 +39,8 @@ const TableHeader = ({ filters, sortConfig, onSort }: TableHeaderProps) => {
     if (!hasAffiliateColumn) {
       visFilters.push({
         field: 'affiliateLink',
-        label: 'Lien affilié',
+        // label: 'Lien affilié',
+        label: 'Lien',
         type: 'text',
         isVisible: true
       });

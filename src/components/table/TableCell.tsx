@@ -8,9 +8,10 @@ interface TableCellProps {
   offerDevice: OfferDevice;
   field: string;
   unit?: string;
+  showOfferTitles: boolean;
 }
 
-const TableCell = ({ offerDevice, field, unit }: TableCellProps) => {
+const TableCell = ({ offerDevice, field, unit, showOfferTitles }: TableCellProps) => {
   const { device, offer } = offerDevice;
   
   if (field === 'price') {
@@ -47,20 +48,22 @@ const TableCell = ({ offerDevice, field, unit }: TableCellProps) => {
     return <>{value.toString()}</>;
   }
 
-  if (field === 'offerUrl') {
+  if (field === 'offerUrl' && false) {
     return (
       <a
         href={offer.url}
         target="_blank"
         rel="noopener noreferrer"
         className="flex items-center text-primary hover:underline text-xs"
+        data-umami-event="affiliate-link"
+        data-umami-event-url={offer.url}
       >
         {offer.store || 'Visit store'} <ExternalLink className="ml-1 w-3 h-3" />
       </a>
     );
   }
 
-  if (field === 'affiliateLink') {
+  if (field === 'affiliateLink' || field === 'offerUrl') {
     const deviceTitle = device.title || '';
     const deviceSubtitle = device.subtitle || '';
     const storeName = offer.store || 'Voir l\'offre';
