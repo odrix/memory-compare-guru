@@ -9,7 +9,9 @@ import { createOfferDevices, getBestPrice } from "@/utils/utils";
 import { useToast } from "@/components/ui/use-toast";
 import PageHeader from "@/components/PageHeader";
 import ContentArea from "@/components/ContentArea";
+import WelcomePart from "@/components/WelcomePart";
 import PageFooter from "@/components/PageFooter";
+
 
 const Index = () => {
   const { toast } = useToast();
@@ -213,9 +215,9 @@ const Index = () => {
       <PageHeader />
       <DeviceTypeMenu />
       <div className="p-4 text-center bg-gray-100 rounded-md shadow-md">
-        <p className="text-md mb-1">
-          Bienvenue sur topdisks, votre comparateur pour choisir le meilleur disque dur.
-         </p>
+        <h1 className="text-md mb-1">
+          Bienvenue sur topdisks, votre comparateur pour choisir le meilleur disque dur
+         </h1>
          <p className="text-sm">
             Que vous cherchiez un SSD rapide pour le gaming, un HDD spacieux pour la sauvegarde, ou un disque dur hybride pour un usage polyvalent,
         </p>
@@ -228,6 +230,7 @@ const Index = () => {
       </div>
       {renderContentArea()}
 
+      <WelcomePart />
       <PageFooter />
     </div>
   );
